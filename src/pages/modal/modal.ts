@@ -17,7 +17,7 @@ export class ModalPage {
     private viewCtrl: ViewController,
     private fb: FormBuilder
   ) {
-    this.todo = this.navParams.get('data');
+    this.todo = this.navParams.get('todo');
     this.initForm();
   }
 

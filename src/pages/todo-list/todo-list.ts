@@ -49,7 +49,7 @@ export class TodoListPage {
     if (slidingList) {
       slidingList.close();
     }
-    let editModal = this.modalCtrl.create(ModalPage, item);
+    let editModal = this.modalCtrl.create(ModalPage, { todo: item });
     editModal.onDidDismiss((data, role) => {
       if (data && !role) {
         this.editTodo(data);
