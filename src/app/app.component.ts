@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { TodoListPage } from '../pages/index';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class ToDoApp {
-  rootPage: any = 'TabsPage';
+  rootPage: any = TodoListPage;
 
   constructor(
     private platform: Platform,

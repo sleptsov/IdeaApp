@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{todo?.id ? 'Edit ToDo' : 'New ToDo'}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding text-center>
+
+  <form [formGroup]="todoForm" (ngSubmit)="onSubmit(todoForm.value)" novalidate>
+    <ion-item margin-bottom>
+      <ion-label stacked>Task name</ion-label>
+      <ion-input type="text" formControlName="taskName" spellcheck="true" autocapitalize="true"></ion-input>
+    </ion-item>
+    <p class="danger" *ngIf="(todoForm.get('taskName').touched || todoForm.get('taskName').dirty) && todoForm.get('taskName').errors">
+      <span *ngIf="todoForm.get('taskName').hasError('required')">
+        Task name is required.
+      </span>
+    </p>
+    <button ion-button outline type="button" (click)="closeModal()">Cancel</button>
+    <button ion-button outline type="submit" [disabled]="!todoForm.valid">{{todo?.id ? 'Edit' : 'Create'}}</button>
+  </form>
+
+</ion-content>

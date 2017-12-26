@@ -1,29 +1,34 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { TabsPage } from './tabs'
+import { ModalPage } from './modal';
+import { NavParamsMocks, ViewControllerMocks } from '../../../test-config/mocks-ionic';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { ViewController } from 'ionic-angular/navigation/view-controller';
 
-let comp: TabsPage;
-let fixture: ComponentFixture<TabsPage>;
+let comp: ModalPage;
+let fixture: ComponentFixture<ModalPage>;
 let de: DebugElement;
 let el: HTMLElement;
 
-describe('Component: TabsPage', () => {
+describe('Component: ModalPage', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                TabsPage
+                ModalPage
             ],
-            providers: [],
+            providers: [
+                { provide: NavParams, useClass: NavParamsMocks },
+                { provide: ViewController, useClass: ViewControllerMocks }
+            ],
             imports: [
-                IonicModule.forRoot(TabsPage)
+                IonicModule.forRoot(ModalPage)
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TabsPage);
+        fixture = TestBed.createComponent(ModalPage);
         comp = fixture.componentInstance;
         de = fixture.debugElement;
         el = de.nativeElement;
@@ -39,7 +44,6 @@ describe('Component: TabsPage', () => {
     it('is created', () => {
         expect(fixture).toBeTruthy();
         expect(comp).toBeTruthy();
-
     });
 
 });

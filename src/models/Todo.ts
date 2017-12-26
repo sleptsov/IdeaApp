@@ -4,7 +4,7 @@ export class Todo {
     isComplete: boolean;
     queueing?: number;
     link: string;
-    createdOn: string | Date;
+    CreatedOn: string | Date;
     CreatedBy: number;
     ModifiedOn: string | Date;
     ModifiedBy: number;

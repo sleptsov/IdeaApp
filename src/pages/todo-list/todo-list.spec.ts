@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { IonicModule } from 'ionic-angular';
-import { TodoListPage } from './todo-list'
+import { IonicModule, ModalController } from 'ionic-angular';
+import { TodoListPage } from './todo-list';
+import { Storage } from '@ionic/storage';
+import { StorageMocks, ModalControllerMocks } from '../../../test-config/mocks-ionic';
+import { LoadingService, ToDoService } from '../../providers/index';
+import { LoadingServiceMocks, ToDoServiceMocks } from '../../../test-config/mocks-services';
 
 let comp: TodoListPage;
 let fixture: ComponentFixture<TodoListPage>;
@@ -15,7 +18,12 @@ describe('Component: TodoListPage', () => {
             declarations: [
                 TodoListPage
             ],
-            providers: [],
+            providers: [
+                { provide: Storage, useClass: StorageMocks },
+                { provide: ModalController, useClass: ModalControllerMocks },
+                { provide: LoadingService, useClass: LoadingServiceMocks },
+                { provide: ToDoService, useClass: ToDoServiceMocks }
+            ],
             imports: [
                 IonicModule.forRoot(TodoListPage)
             ]
@@ -39,7 +47,6 @@ describe('Component: TodoListPage', () => {
     it('is created', () => {
         expect(fixture).toBeTruthy();
         expect(comp).toBeTruthy();
-
     });
 
 });

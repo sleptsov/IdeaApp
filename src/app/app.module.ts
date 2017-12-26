@@ -10,11 +10,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { config, dbconfig } from '../config/config';
-import { RestService, ToDoService, HeaderInterceptor } from '../providers';
+import { RestService, ToDoService, HeaderInterceptor, LoadingService } from '../providers/index';
 
+import { TodoListPage, ModalPage } from '../pages/index';
 @NgModule({
   declarations: [
-    ToDoApp
+    ToDoApp,
+    TodoListPage,
+    ModalPage
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,9 @@ import { RestService, ToDoService, HeaderInterceptor } from '../providers';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ToDoApp
+    ToDoApp,
+    TodoListPage,
+    ModalPage
   ],
   providers: [
     StatusBar,
@@ -33,6 +38,7 @@ import { RestService, ToDoService, HeaderInterceptor } from '../providers';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     RestService,
     ToDoService,
+    LoadingService,
     {
       provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true,
     }
