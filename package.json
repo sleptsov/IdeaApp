@@ -1,15 +1,22 @@
 {
   "name": "ideaApp",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "test": "karma start ./test-config/karma.conf.js",
+    "test-coverage": "karma start ./test-config/karma.conf.js --coverage",
+    "test-ci": "karma start ./test-config/karma.conf.js --single-run",
+    "e2e": "webdriver-manager update --standalone false --gecko false && protractor ./test-config/protractor.conf.js",
+    "dev": "ionic serve -b",
+    "update-deps": "rm -rf node_modules && rm -rf package-lock.json && npm install"
+  },
+  "engines": {
+    "node": ">=8.9.3"
   },
   "dependencies": {
     "@angular/common": "5.0.3",
@@ -20,20 +27,61 @@
     "@angular/http": "5.0.3",
     "@angular/platform-browser": "5.0.3",
     "@angular/platform-browser-dynamic": "5.0.3",
-    "@ionic-native/core": "4.4.0",
-    "@ionic-native/splash-screen": "4.4.0",
-    "@ionic-native/status-bar": "4.4.0",
+    "@ionic-native/core": "4.5.2",
+    "@ionic-native/splash-screen": "4.5.2",
+    "@ionic-native/status-bar": "4.5.2",
     "@ionic/pro": "1.0.16",
     "@ionic/storage": "2.1.3",
+    "cordova-android": "6.4.0",
+    "cordova-ios": "4.5.4",
+    "cordova-plugin-device": "^2.0.0",
+    "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-splashscreen": "^5.0.0",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-windows": "5.0.0",
     "ionic-angular": "3.9.2",
+    "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
-    "rxjs": "5.5.2",
+    "rxjs": "5.5.6",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.6",
+    "@types/jasmine": "^2.8.1",
+    "@types/node": "^8.5.2",
+    "angular2-template-loader": "^0.6.2",
+    "html-loader": "^0.5.1",
+    "ionic": "3.19.0",
+    "istanbul-instrumenter-loader": "^3.0.0",
+    "jasmine": "^2.5.3",
+    "jasmine-spec-reporter": "^4.1.0",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage-istanbul-reporter": "^1.3.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.9",
+    "null-loader": "^0.1.1",
+    "protractor": "^5.2.2",
+    "ts-loader": "^3.2.0",
+    "ts-node": "^4.1.0",
     "typescript": "2.4.2"
   },
-  "description": "An Ionic project"
+  "description": "Simple idea app",
+  "cordova": {
+    "plugins": {
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {}
+    },
+    "platforms": [
+      "ios",
+      "android",
+      "windows"
+    ]
+  }
 }
