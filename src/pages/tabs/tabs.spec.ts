@@ -2,36 +2,28 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { ToDoApp } from './app.component';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Platform } from 'ionic-angular';
-import { PlatformMocks, StatusBarMock, SplashScreenMock } from '../../test-config/mocks-ionic';
+import { TabsPage } from './tabs'
 
-let comp: ToDoApp;
-let fixture: ComponentFixture<ToDoApp>;
+let comp: TabsPage;
+let fixture: ComponentFixture<TabsPage>;
 let de: DebugElement;
 let el: HTMLElement;
 
-describe('Component: ToDoApp', () => {
+describe('Component: TabsPage', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                ToDoApp
+                TabsPage
             ],
-            providers: [
-                { provide: Platform, useClass: PlatformMocks },
-                { provide: StatusBar, useClass: StatusBarMock },
-                { provide: SplashScreen, useClass: SplashScreenMock }
-            ],
+            providers: [],
             imports: [
-                IonicModule.forRoot(ToDoApp),
+                IonicModule.forRoot(TabsPage)
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ToDoApp);
+        fixture = TestBed.createComponent(TabsPage);
         comp = fixture.componentInstance;
         de = fixture.debugElement;
         el = de.nativeElement;

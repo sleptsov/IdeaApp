@@ -22,4 +22,4 @@ End-to-End - `npm run e2e`
 See `https://ionicframework.com/docs/intro/deploying/`
 
 ### About    
-Idea App modile
+ToDo App modile

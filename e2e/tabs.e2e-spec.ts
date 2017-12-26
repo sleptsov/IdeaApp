@@ -6,9 +6,9 @@ describe('Tabs Page', () => {
   let tutorialPage: TabsPage = new TabsPage();
   commonPage.navigateTo('/');
 
-  it('should have a title saying Idea App', () => {
+  it('should have a title saying ToDo App', () => {
     commonPage.getTitle().then(title => {
-      expect(title).toEqual('Idea App');
+      expect(title).toEqual('ToDo App');
     });
   });
 

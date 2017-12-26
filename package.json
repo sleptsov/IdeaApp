@@ -1,5 +1,5 @@
 {
-  "name": "ideaApp",
+  "name": "ToDoApp",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
     "test-coverage": "karma start ./test-config/karma.conf.js --coverage",
     "test-ci": "karma start ./test-config/karma.conf.js --single-run",
     "e2e": "webdriver-manager update --standalone false --gecko false && protractor ./test-config/protractor.conf.js",
-    "dev": "ionic serve -b",
+    "dev": "ionic serve",
     "update-deps": "rm -rf node_modules && rm -rf package-lock.json && npm install"
   },
   "engines": {
@@ -69,7 +69,7 @@
     "ts-node": "^4.1.0",
     "typescript": "2.4.2"
   },
-  "description": "Simple idea app",
+  "description": "Simple ToDo app",
   "cordova": {
     "plugins": {
       "ionic-plugin-keyboard": {},
