@@ -21,5 +21,5 @@ End-to-End - `npm run e2e`
 ### Sign APK
 See `https://ionicframework.com/docs/intro/deploying/`
 
-###About    
+### About    
 Idea App modile
