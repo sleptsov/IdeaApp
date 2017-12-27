@@ -18,7 +18,7 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-  <div padding text-center *ngIf="todos?.length === 0">
+  <div padding text-center *ngIf="!todos?.length">
     <h3>You have no todos. </h3>
     <h4 class="helper-text"> Click
       <ion-icon name="add-circle" (click)="openAddModal()"></ion-icon> to add one.</h4>

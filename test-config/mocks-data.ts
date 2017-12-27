@@ -7,7 +7,7 @@ export const MockTodos: Todo[] = [
         isComplete: false,
         queueing: 456,
         link: 'link',
-        createdOn: '24-12-2017',
+        CreatedOn: '24-12-2017',
         CreatedBy: 123456,
         ModifiedOn: '25-12-2017',
         ModifiedBy: 987654
@@ -18,7 +18,7 @@ export const MockTodos: Todo[] = [
         isComplete: true,
         queueing: 456,
         link: 'link',
-        createdOn: '22-12-2017',
+        CreatedOn: '22-12-2017',
         CreatedBy: 123456,
         ModifiedOn: '23-12-2017',
         ModifiedBy: 987654
@@ -29,7 +29,7 @@ export const MockTodos: Todo[] = [
         isComplete: false,
         queueing: 456,
         link: 'link',
-        createdOn: '26-12-2017',
+        CreatedOn: '26-12-2017',
         CreatedBy: 123456,
         ModifiedOn: '26-12-2017',
         ModifiedBy: 987654

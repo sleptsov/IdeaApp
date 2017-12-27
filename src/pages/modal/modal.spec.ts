@@ -5,6 +5,7 @@ import { ModalPage } from './modal';
 import { NavParamsMocks, ViewControllerMocks } from '../../../test-config/mocks-ionic';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
+import { MockTodos } from '../../../test-config/mocks-data';
 
 let comp: ModalPage;
 let fixture: ComponentFixture<ModalPage>;

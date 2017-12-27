@@ -335,7 +335,9 @@ export class ViewControllerMocks {
   }
 
   public dismiss(): any {
-    return true;
+    return new Promise(function (resolve: Function): void {
+      resolve();
+    });
   }
 
   public enableBack(): any {
