@@ -3,7 +3,8 @@ import { RestService } from '../index';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { Todo } from '../../models/Todo';
-import { MockTodos } from '../../assets/mocks/todo-mocks';
+
+const MOCK_DATA_PATH: string = 'assets/mocks/MOCK_DATA.json';
 
 @Injectable()
 export class ToDoService {
@@ -14,10 +15,8 @@ export class ToDoService {
   }
 
   loadTodos(): Observable<Todo[]> {
-    //return this.restService.fetch(``);
-
     //mock response
-    return of(MockTodos);
+    return this.restService.fetch(MOCK_DATA_PATH);
   }
 
   deleteTodo(id: number): Observable<any> {

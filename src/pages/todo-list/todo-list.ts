@@ -52,7 +52,7 @@ export class TodoListPage {
     let editModal = this.modalCtrl.create(ModalPage, { todo: item });
     editModal.onDidDismiss((data, role) => {
       if (data && !role) {
-        this.editTodo(data);
+        this.editTodo(item, data);
       }
     });
     editModal.present();
@@ -62,14 +62,25 @@ export class TodoListPage {
     if (!data) {
       return;
     }
-    console.log('New', data);
+    this.loadingService.presentLoading('Saving...');
+
+    let newTodo: Todo = new Todo();
+    newTodo = Object.assign({}, newTodo, data);
+    console.log(newTodo);
+    this.todos = [...this.todos, newTodo];
+    this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+    this.loadingService.dismiss();
   }
 
-  editTodo(todo: Todo): void {
-    if (!todo) {
+  editTodo(todo: Todo, data: any): void {
+    if (!todo || !data) {
       return;
     }
-    console.log('Edit', todo);
+    this.loadingService.presentLoading('Saving...');
+    todo = Object.assign({}, todo, data);
+    this.todos = this.updateTodos(todo);
+    this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+    this.loadingService.dismiss();
   }
 
   updateStatus(todo: Todo): void {
@@ -88,7 +99,7 @@ export class TodoListPage {
         taskName: item.id === todo.id ? todo.taskName : item.taskName,
         isComplete: item.id === todo.id ? todo.isComplete : item.isComplete,
         queueing: item.queueing,
-        link: item.link,
+        link: item.id === todo.id ? todo.link : item.link,
         CreatedOn: item.CreatedOn,
         CreatedBy: item.CreatedBy,
         ModifiedOn: item.ModifiedOn,
@@ -148,7 +159,10 @@ export class TodoListPage {
             console.log('Some thing went wrong');
           }
         },
-          (error) => { console.log(error) },
+          (error) => {
+            this.loadingService.dismiss();
+            console.log(error)
+          },
           () => {
             this.loadingService.dismiss();
           });

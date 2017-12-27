@@ -10,6 +10,7 @@ import { Todo } from '../../models/Todo';
 export class ModalPage {
 
   todo: Todo;
+  todoMaxLength: number = 100;
   todoForm: FormGroup;
 
   constructor(
@@ -29,7 +30,8 @@ export class ModalPage {
 
   initForm(): void {
     this.todoForm = this.fb.group({
-      taskName: ['', Validators.required]
+      taskName: ['', Validators.compose([Validators.required, Validators.maxLength(this.todoMaxLength)])],
+      link: ['', Validators.compose([Validators.pattern('^(http:\/\/|https:\/\/|www)(.*)')])]
     });
     this.patchForm(this.todo);
   }
@@ -37,7 +39,8 @@ export class ModalPage {
   patchForm(todo: Todo): void {
     if (todo) {
       this.todoForm.patchValue({
-        taskName: todo.taskName
+        taskName: todo.taskName,
+        link: todo.link
       })
     }
   }

@@ -1,51 +1,29 @@
 page-todo-list {
 
     .todo-item-wrapper {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-
-        .todo-item-icon {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            flex: 0 0 auto;
-            margin-right: 10px; 
-            ion-icon {
-                font-size: 2em;
+        ion-label {
+            white-space: normal;
+            .date {
+                display: block;
+                font-size: 12px;
+                margin-top: 5px;
             }
         }
-
-        .todo-item-link {
-            margin-left: 10px; 
+        &.done {
+            text-decoration: line-through;
+            color: #666;
+            .todo-text {
+                color: #666;
+    
+            }
             ion-icon {
-                font-size: 2em;
                 color: rgba(0, 0, 0, 0.25);
             }
         }
 
-        .todo-item-box {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            flex: 1 0 auto;
-
-            .line-through {
-                text-decoration: line-through;
-            }
-
-            .todo-item-date {
-                color: rgba(0, 0, 0, 0.5);
-                font-size: 12px;
-                margin-top: 3px;
-                text-align: right;
-            }
-
+        .todo-icon-status {
+            font-size: 2.8rem;
         }
-
     }
 
 }

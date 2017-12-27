@@ -21,20 +21,14 @@
 
   <ion-list *ngIf="todos">
     <ion-item-sliding #slidingList *ngFor="let item of todos">
-      <ion-item>
-        <div class="todo-item-wrapper">
-          <div class="todo-item-icon" (click)="updateStatus(item)">
-            <ion-icon *ngIf="!item?.isComplete" name="square-outline"></ion-icon>
-            <ion-icon *ngIf="item?.isComplete" name="checkbox-outline"></ion-icon>
-          </div>
-          <div class="todo-item-box">
-            <span [class.line-through]="item?.isComplete">{{item?.taskName}}</span>
-            <span class="todo-item-date">{{item?.CreatedOn | date: 'dd/MM/yyyy'}}</span>
-          </div>
-          <div class="todo-item-link" *ngIf="item.link" (click)="visitLink(item.link)">
-            <ion-icon name="link"></ion-icon>
-          </div>
+      <ion-item class="todo-item-wrapper" [class.done]="item?.isComplete">
+        <ion-icon item-start *ngIf="!item?.isComplete" name="square-outline" (click)="updateStatus(item)"></ion-icon>
+        <ion-icon item-start *ngIf="item?.isComplete" name="checkbox-outline" (click)="updateStatus(item)"></ion-icon>
+        <div class="todo-text">
+          <span>{{item?.taskName}}</span>
+          <span class="date">{{item?.CreatedOn | date: 'dd/MM/yyyy'}}</span>
         </div>
+        <ion-icon item-end name="link" *ngIf="item.link" (click)="visitLink(item.link)"></ion-icon>
       </ion-item>
       <ion-item-options side="right">
         <button ion-button color="primary" (click)="openEditModal(item, slidingList)">
