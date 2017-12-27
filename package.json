@@ -12,7 +12,7 @@
     "test-coverage": "karma start ./test-config/karma.conf.js --coverage",
     "test-ci": "karma start ./test-config/karma.conf.js --single-run",
     "e2e": "webdriver-manager update --standalone false --gecko false && protractor ./test-config/protractor.conf.js",
-    "dev": "ionic serve",
+    "dev": "ionic serve -b",
     "update-deps": "rm -rf node_modules && rm -rf package-lock.json && npm install"
   },
   "engines": {

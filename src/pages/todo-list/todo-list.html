@@ -18,6 +18,11 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
+  <div padding text-center *ngIf="todos?.length === 0">
+    <h3>You have no todos. </h3>
+    <h4 class="helper-text"> Click
+      <ion-icon name="add-circle" (click)="openAddModal()"></ion-icon> to add one.</h4>
+  </div>
 
   <ion-list *ngIf="todos">
     <ion-item-sliding #slidingList *ngFor="let item of todos">

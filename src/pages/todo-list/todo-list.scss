@@ -26,4 +26,13 @@ page-todo-list {
         }
     }
 
+    .helper-text {
+        display: inline-flex;
+        ion-icon {
+            padding: 0 1rem;
+            color: map-get($colors, secondary);
+        }
+
+    }
+
 }
