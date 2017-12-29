@@ -2,16 +2,12 @@
 
   <ion-navbar color="primary">
     <ion-title>Todo List</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openFilterMenu()" [disabled]="!todos?.length">
+        <ion-icon name="options"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
-  <ion-segment [(ngModel)]="initialSortBy" color="primary" mode="md" (ionChange)="sortBy($event.value)" [disabled]="!todos?.length">
-    <ion-segment-button value="{{sortTypes.CREATED}}">
-      Created
-    </ion-segment-button>
-    <ion-segment-button value="{{sortTypes.MODIFIED}}">
-      Modified
-    </ion-segment-button>
-  </ion-segment>
 </ion-header>
 
 <ion-content padding>
@@ -27,7 +23,7 @@
   </ion-fab>
   <div padding text-center *ngIf="!todos?.length">
     <h3>You have no todos. </h3>
-    <h4 class="helper-text"> Click
+    <h4 class="helper-text">Click
       <ion-icon name="add-circle" (click)="openAddModal()"></ion-icon> to add one.</h4>
   </div>
 
@@ -38,14 +34,25 @@
         <ion-icon item-start *ngIf="item?.isComplete" name="checkbox-outline" (click)="updateStatus(item)"></ion-icon>
         <div class="todo-text">
           <span>{{item?.taskName}}</span>
-          <span class="date" *ngIf="initialSortBy === sortTypes.CREATED">Created: {{item?.CreatedOn | date: 'dd/MM/yyyy'}}</span>
-          <span class="date" *ngIf="initialSortBy === sortTypes.MODIFIED">Modified: {{item?.ModifiedOn | date: 'dd/MM/yyyy'}}</span>
+          <div class="queueing">Queueing: {{item?.queueing}}</div>
+          <div class="date" *ngIf="initialSortBy === sortTypes.CREATED">Created: {{item?.CreatedOn | date: 'dd/MM/yyyy'}}</div>
+          <div class="date" *ngIf="initialSortBy === sortTypes.MODIFIED">Modified: {{item?.ModifiedOn | date: 'dd/MM/yyyy'}}</div>
         </div>
-        <ion-icon item-end name="link" color="dark" *ngIf="item.link" (click)="visitLink(item.link)"></ion-icon>
-        <ion-icon item-end name="create" color="primary" *ngIf="!isMobile" (click)="openEditModal(item)"></ion-icon>
-        <ion-icon item-end name="trash" color="danger" *ngIf="!isMobile" (click)="openDeleteTodoConfirm(item)"></ion-icon>
+        <button class="btn-link" ion-button item-end large icon-only clear *ngIf="item?.link" (click)="visitLink(item.link)">
+          <ion-icon name="link" color="dark"></ion-icon>
+        </button>
+        <button class="btn-edit" ion-button item-end large icon-only clear *ngIf="!isMobile" (click)="openEditModal(item)">
+          <ion-icon name="create" color="primary"></ion-icon>
+        </button>
+        <button class="btn-delete" ion-button item-end large icon-only clear *ngIf="!isMobile" (click)="openDeleteTodoConfirm(item)">
+          <ion-icon name="trash" color="danger"></ion-icon>
+        </button>
       </ion-item>
       <ion-item-options side="right" *ngIf="isMobile">
+        <button ion-button color="secondary" *ngIf="item?.link" (click)="visitLink(item?.link, slidingList)">
+          <ion-icon name="link"></ion-icon>
+          Link
+        </button>
         <button ion-button color="primary" (click)="openEditModal(item, slidingList)">
           <ion-icon name="create"></ion-icon>
           Edit
@@ -59,3 +66,36 @@
   </ion-list>
 
 </ion-content>
+
+<!-- Filter Menu -->
+
+<ion-menu id="todoListMenu" [content]="todoListNav" side="right" type="overlay">
+
+  <ion-header>
+    <ion-navbar color="primary">
+      <ion-title>Todo filters</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only menuClose="todoListMenu">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content padding-vertical>
+    <ion-list class="td-filter-list">
+      <ion-item-group>
+        <ion-item-divider color="light">Sort By</ion-item-divider>
+        <button menuClose="todoListMenu" ion-item icon-end (click)="sortBy(sortTypes.CREATED)" [class.selected]="initialSortBy === sortTypes.CREATED">Created
+          <ion-icon *ngIf="initialSortBy === sortTypes.CREATED" name="checkmark"></ion-icon>
+        </button>
+        <button menuClose="todoListMenu" ion-item icon-end (click)="sortBy(sortTypes.MODIFIED)" [class.selected]="initialSortBy === sortTypes.MODIFIED">Modified
+          <ion-icon *ngIf="initialSortBy === sortTypes.MODIFIED" name="checkmark"></ion-icon>
+        </button>
+      </ion-item-group>
+    </ion-list>
+
+  </ion-content>
+</ion-menu>
+
+<ion-nav #todoListNav></ion-nav>

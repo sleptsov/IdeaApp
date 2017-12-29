@@ -3,9 +3,11 @@ import { DebugElement } from '@angular/core';
 import { IonicModule, ModalController } from 'ionic-angular';
 import { TodoListPage } from './todo-list';
 import { Storage } from '@ionic/storage';
-import { StorageMocks, ModalControllerMocks } from '../../../test-config/mocks-ionic';
+import { StorageMocks, ModalControllerMocks, AlertControllerMocks, MenuControllerMocks } from '../../../test-config/mocks-ionic';
 import { LoadingService, ToDoService, SettingsService } from '../../providers/index';
 import { LoadingServiceMocks, ToDoServiceMocks, SettingsServiceMock } from '../../../test-config/mocks-services';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { MenuController } from 'ionic-angular/components/app/menu-controller';
 
 let comp: TodoListPage;
 let fixture: ComponentFixture<TodoListPage>;
@@ -23,7 +25,9 @@ describe('Component: TodoListPage', () => {
                 { provide: ModalController, useClass: ModalControllerMocks },
                 { provide: LoadingService, useClass: LoadingServiceMocks },
                 { provide: ToDoService, useClass: ToDoServiceMocks },
-                { provide: SettingsService, useClass: SettingsServiceMock }
+                { provide: SettingsService, useClass: SettingsServiceMock },
+                { provide: AlertController, useClass: AlertControllerMocks },
+                { provide: MenuController, useClass: MenuControllerMocks }
             ],
             imports: [
                 IonicModule.forRoot(TodoListPage)

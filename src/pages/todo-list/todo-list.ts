@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, AlertController } from 'ionic-angular';
+import { ModalController, AlertController, MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ToDoService, LoadingService, SettingsService } from '../../providers';
 import { DATA, SORT_TYPES } from '../../models/Common';
@@ -23,7 +23,8 @@ export class TodoListPage {
     private loadingService: LoadingService,
     private modalCtrl: ModalController,
     private settingsSetvice: SettingsService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private menuCtrl: MenuController
   ) {
   }
 
@@ -220,9 +221,11 @@ export class TodoListPage {
     switch (sortBy) {
       case this.sortTypes.CREATED:
         this.todos.sort((a, b): any => new Date(a.CreatedOn).getTime() - new Date(b.CreatedOn).getTime());
+        this.initialSortBy = sortBy;
         break;
       case this.sortTypes.MODIFIED:
         this.todos.sort((a, b): any => new Date(a.ModifiedOn).getTime() - new Date(b.ModifiedOn).getTime());
+        this.initialSortBy = sortBy;
         break;
       default:
         break;
@@ -257,6 +260,9 @@ export class TodoListPage {
     alert.present();
   }
 
-
+  openFilterMenu(): void {
+    this.menuCtrl.enable(true, 'todoListMenu');
+    this.menuCtrl.open('todoListMenu');
+  }
 
 }

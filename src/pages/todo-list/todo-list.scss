@@ -3,8 +3,7 @@ page-todo-list {
     .todo-item-wrapper {
         ion-label {
             white-space: normal;
-            .date {
-                display: block;
+            .date, .queueing {
                 font-size: 12px;
                 margin-top: 5px;
             }
@@ -24,6 +23,20 @@ page-todo-list {
         .todo-icon-status {
             font-size: 2.8rem;
         }
+
+        .btn-edit:hover {
+            background-color: map-get($colors, primary);
+            ion-icon {
+                color: map-get($colors, light);
+            }
+        }
+
+        .btn-delete:hover {
+            background-color: map-get($colors, danger);
+            ion-icon {
+                color: map-get($colors, light);
+            }
+        }
     }
 
     .helper-text {
@@ -33,6 +46,19 @@ page-todo-list {
             color: map-get($colors, secondary);
         }
 
+    }
+
+    .selected {
+        color: map-get($colors, primary);
+        font-weight: 500;
+    }
+
+    .td-filter-list {
+        button.item-ios {
+            .item-inner {
+                background-image: none;
+            }
+        }
     }
 
 }

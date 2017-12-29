@@ -18,7 +18,7 @@ export class Todo {
         CreatedBy: number = 0,
         ModifiedOn: string = new Date().toISOString(),
         ModifiedBy: number = 0,
-        queueing?: number
+        queueing: number = Math.floor(Math.random() * 1000) + 1
     ) {
         this.id = id;
         this.taskName = taskName;
