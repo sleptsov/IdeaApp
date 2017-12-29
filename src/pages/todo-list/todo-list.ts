@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { ToDoService, LoadingService } from '../../providers';
+import { ToDoService, LoadingService, SettingsService } from '../../providers';
 import { DATA } from '../../models/Common';
 import { Todo } from '../../models/Todo';
 import { ModalPage } from '../index';
@@ -13,17 +13,20 @@ import { ModalPage } from '../index';
 export class TodoListPage {
 
   todos: Todo[];
+  isMobile: boolean;
 
   constructor(
     private todoService: ToDoService,
     private storage: Storage,
     private loadingService: LoadingService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private settingsSetvice: SettingsService
   ) {
   }
 
   ionViewDidLoad(): void {
     this.loadTodos();
+    this.isMobile = this.settingsSetvice.isMobile;
   }
 
   doRefresh(refresher): void {

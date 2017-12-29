@@ -142,7 +142,9 @@ export class ModalControllerMocks {
 }
 
 export class LoadingControllerMocks {
-
+  create() {
+    return;
+  }
 }
 
 export class AlertControllerMocks {

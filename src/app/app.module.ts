@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { config, dbconfig } from '../config/config';
-import { RestService, ToDoService, HeaderInterceptor, LoadingService } from '../providers/index';
+import { RestService, ToDoService, HeaderInterceptor, LoadingService, SettingsService } from '../providers/index';
 
 import { TodoListPage, ModalPage } from '../pages/index';
 @NgModule({
@@ -39,6 +39,7 @@ import { TodoListPage, ModalPage } from '../pages/index';
     RestService,
     ToDoService,
     LoadingService,
+    SettingsService,
     {
       provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true,
     }

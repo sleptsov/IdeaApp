@@ -16,3 +16,7 @@ export class ToDoServiceMocks {
         return of(MockTodos);
     }
 }
+
+export class SettingsServiceMock {
+
+}
