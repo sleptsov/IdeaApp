@@ -178,9 +178,12 @@ export class TodoListPage {
       });
   }
 
-  visitLink(link: string): void {
+  visitLink(link: string, slidingList: any): void {
     if (!link) {
       return;
+    }
+    if (slidingList) {
+      slidingList.close();
     }
     window.open(link, '_system');
   }
