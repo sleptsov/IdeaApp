@@ -4,9 +4,9 @@ export class Todo {
     isComplete: boolean;
     queueing?: number;
     link: string;
-    CreatedOn: string | Date;
+    CreatedOn: string;
     CreatedBy: number;
-    ModifiedOn: string | Date;
+    ModifiedOn: string;
     ModifiedBy: number;
 
     constructor(
@@ -14,9 +14,9 @@ export class Todo {
         taskName: string = '',
         isComplete: boolean = false,
         link: string = '',
-        CreatedOn: string | Date = new Date().toISOString(),
+        CreatedOn: string = new Date().toISOString(),
         CreatedBy: number = 0,
-        ModifiedOn: string | Date = new Date().toISOString(),
+        ModifiedOn: string = new Date().toISOString(),
         ModifiedBy: number = 0,
         queueing?: number
     ) {

@@ -4,8 +4,15 @@
     <ion-title>Todo List</ion-title>
   </ion-navbar>
 
+  <ion-segment [(ngModel)]="initialSortBy" color="primary" mode="md" (ionChange)="sortBy($event.value)" [disabled]="!todos?.length">
+    <ion-segment-button value="{{sortTypes.CREATED}}">
+      Created
+    </ion-segment-button>
+    <ion-segment-button value="{{sortTypes.MODIFIED}}">
+      Modified
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
-
 
 <ion-content padding>
 
@@ -13,7 +20,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-fab top right edge>
+  <ion-fab bottom right>
     <button ion-fab color="secondary" (click)="openAddModal()">
       <ion-icon name="add"></ion-icon>
     </button>
@@ -31,7 +38,8 @@
         <ion-icon item-start *ngIf="item?.isComplete" name="checkbox-outline" (click)="updateStatus(item)"></ion-icon>
         <div class="todo-text">
           <span>{{item?.taskName}}</span>
-          <span class="date">{{item?.CreatedOn | date: 'dd/MM/yyyy'}}</span>
+          <span class="date" *ngIf="initialSortBy === sortTypes.CREATED">Created: {{item?.CreatedOn | date: 'dd/MM/yyyy'}}</span>
+          <span class="date" *ngIf="initialSortBy === sortTypes.MODIFIED">Modified: {{item?.ModifiedOn | date: 'dd/MM/yyyy'}}</span>
         </div>
         <ion-icon item-end name="link" color="dark" *ngIf="item.link" (click)="visitLink(item.link)"></ion-icon>
         <ion-icon item-end name="create" color="primary" *ngIf="!isMobile" (click)="openEditModal(item)"></ion-icon>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ToDoService, LoadingService, SettingsService } from '../../providers';
-import { DATA } from '../../models/Common';
+import { DATA, SORT_TYPES } from '../../models/Common';
 import { Todo } from '../../models/Todo';
 import { ModalPage } from '../index';
 
@@ -14,6 +14,8 @@ export class TodoListPage {
 
   todos: Todo[];
   isMobile: boolean;
+  sortTypes = SORT_TYPES;
+  initialSortBy: string = this.sortTypes.CREATED;
 
   constructor(
     private todoService: ToDoService,
@@ -187,12 +189,14 @@ export class TodoListPage {
     this.storage.get(DATA.TODOS).then((value) => {
       if (value) {
         this.todos = JSON.parse(value);
+        this.sortBy(this.sortTypes.CREATED);
         this.loadingService.dismiss();
       } else {
         this.loadingService.presentLoading('Loading data...');
         this.todoService.loadTodos().subscribe((response: Todo[]) => {
           if (response) {
             this.todos = response;
+            this.sortBy(this.sortTypes.CREATED);
             this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
           } else {
             console.log('Some thing went wrong');
@@ -207,6 +211,23 @@ export class TodoListPage {
           });
       }
     });
+  }
+
+
+  sortBy(sortBy: string): void {
+    if (!sortBy) {
+      return;
+    }
+    switch (sortBy) {
+      case this.sortTypes.CREATED:
+        this.todos.sort((a, b): any => new Date(a.CreatedOn).getTime() - new Date(b.CreatedOn).getTime());
+        break;
+      case this.sortTypes.MODIFIED:
+        this.todos.sort((a, b): any => new Date(a.ModifiedOn).getTime() - new Date(b.ModifiedOn).getTime());
+        break;
+      default:
+        break;
+    }
   }
 
 
