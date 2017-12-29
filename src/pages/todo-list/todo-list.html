@@ -38,7 +38,7 @@
           <div class="date" *ngIf="initialSortBy === sortTypes.CREATED">Created: {{item?.CreatedOn | date: 'dd/MM/yyyy'}}</div>
           <div class="date" *ngIf="initialSortBy === sortTypes.MODIFIED">Modified: {{item?.ModifiedOn | date: 'dd/MM/yyyy'}}</div>
         </div>
-        <button class="btn-link" ion-button item-end large icon-only clear *ngIf="item?.link" (click)="visitLink(item.link)">
+        <button class="btn-link" ion-button item-end large icon-only clear *ngIf="item?.link" [class.right]="isMobile" (click)="visitLink(item.link)">
           <ion-icon name="link" color="dark"></ion-icon>
         </button>
         <button class="btn-edit" ion-button item-end large icon-only clear *ngIf="!isMobile" (click)="openEditModal(item)">
@@ -51,11 +51,11 @@
       <ion-item-options side="right" *ngIf="isMobile">
         <button ion-button color="secondary" *ngIf="item?.link" (click)="visitLink(item?.link, slidingList)">
           <ion-icon name="link"></ion-icon>
-          Link
+          &nbsp;&nbsp;&nbsp;Link&nbsp;&nbsp;&nbsp;
         </button>
         <button ion-button color="primary" (click)="openEditModal(item, slidingList)">
           <ion-icon name="create"></ion-icon>
-          Edit
+          &nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;
         </button>
         <button ion-button color="danger" (click)="openDeleteTodoConfirm(item, slidingList)">
           <ion-icon name="trash"></ion-icon>
