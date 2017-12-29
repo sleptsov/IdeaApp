@@ -15,14 +15,31 @@ export class ToDoService {
   }
 
   loadTodos(): Observable<Todo[]> {
-    //mock response
+    // mock response
     return this.restService.fetch(MOCK_DATA_PATH);
   }
 
   deleteTodo(id: number): Observable<any> {
-    //return this.restService.delete(``);
+    // return this.restService.delete(``);
 
-    //mock response
+    // type the Observable
+    // mock response
+    return of(true);
+  }
+
+  addTodo(todo: Todo): Observable<any> {
+    // return this.restService.post(``, todo);
+
+    // type the Observable
+    // mock response
+    return of(true);
+  }
+
+  editTodo(todo: Todo): Observable<any> {
+    // return this.restService.put(``, todo);
+
+    // type the Observable
+    // mock response
     return of(true);
   }
 

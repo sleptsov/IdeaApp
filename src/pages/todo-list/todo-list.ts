@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { } from '../imdex';
 import { ToDoService, LoadingService } from '../../providers';
 import { DATA } from '../../models/Common';
 import { Todo } from '../../models/Todo';
@@ -66,10 +65,21 @@ export class TodoListPage {
 
     let newTodo: Todo = new Todo();
     newTodo = Object.assign({}, newTodo, data);
-    console.log(newTodo);
-    this.todos = [...this.todos, newTodo];
-    this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
-    this.loadingService.dismiss();
+
+    this.todoService.addTodo(newTodo).subscribe((response: any) => {
+      if (response) {
+        this.todos = [...this.todos, newTodo];
+        this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+      } else {
+        console.log('Some thing went wrong');
+      }
+    }, (error) => {
+      this.loadingService.dismiss();
+      console.log(error)
+    },
+      () => {
+        this.loadingService.dismiss();
+      });
   }
 
   editTodo(todo: Todo, data: any): void {
@@ -78,9 +88,21 @@ export class TodoListPage {
     }
     this.loadingService.presentLoading('Saving...');
     todo = Object.assign({}, todo, data);
-    this.todos = this.updateTodos(todo);
-    this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
-    this.loadingService.dismiss();
+
+    this.todoService.editTodo(todo).subscribe((response: any) => {
+      if (response) {
+        this.todos = this.updateTodos(todo);
+        this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+      } else {
+        console.log('Some thing went wrong');
+      }
+    }, (error) => {
+      this.loadingService.dismiss();
+      console.log(error)
+    },
+      () => {
+        this.loadingService.dismiss();
+      });
   }
 
   updateStatus(todo: Todo): void {
@@ -88,8 +110,22 @@ export class TodoListPage {
       return;
     }
     todo.isComplete = !todo.isComplete;
-    this.updateTodos(todo);
-    this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+
+    this.loadingService.presentLoading('Saving...');
+    this.todoService.editTodo(todo).subscribe((response: any) => {
+      if (response) {
+        this.todos = this.updateTodos(todo);
+        this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+      } else {
+        console.log('Some thing went wrong');
+      }
+    }, (error) => {
+      this.loadingService.dismiss();
+      console.log(error)
+    },
+      () => {
+        this.loadingService.dismiss();
+      });
   }
 
   updateTodos(todo: Todo, todos: Todo[] = this.todos): Todo[] {
