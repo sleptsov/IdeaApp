@@ -17,16 +17,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <!-- cordova.js required for cordova apps (remove if not needed) -->
-  <!-- <script src="cordova.js"></script> -->
+  <script src="cordova.js" defer></script>
 
-  <!-- un-comment this code to enable service worker
+  <!-- un-comment this code to enable service worker -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log('service worker installed'))
         .catch(err => console.error('Error', err));
     }
-  </script>-->
+  </script>
 
   <link href="build/main.css" rel="stylesheet">
 
@@ -38,14 +38,20 @@
   <ion-app></ion-app>
 
   <!-- The polyfills js is generated during the build process -->
-  <script src="build/polyfills.js"></script>
+  <script src="build/polyfills.js" defer></script>
 
   <!-- The vendor js is generated during the build process
        It contains all of the dependencies in node_modules -->
-  <script src="build/vendor.js"></script>
+  <script src="build/vendor.js" defer></script>
 
   <!-- The main bundle js is generated during the build process -->
-  <script src="build/main.js"></script>
+  <script src="build/main.js" defer></script>
+
+  <!-- Provide fallback content when JavaScript is not available -->
+  <noscript>
+    <h1>You don’t have javascript enabled.</h1>
+    <p>Please enable it to get the full experience.</p>
+  </noscript>
 
 </body>
 
