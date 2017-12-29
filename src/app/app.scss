@@ -18,3 +18,14 @@
 .danger {
     color: map-get($colors, danger);
 }
+
+.td-alert-danger {
+    .alert-head {
+        background-color: map-get($colors, danger);
+        color: #fff;
+    }
+
+    .alert-message {
+        padding-top: 16px;
+    }
+}

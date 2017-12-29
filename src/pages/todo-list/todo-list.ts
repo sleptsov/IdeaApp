@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ToDoService, LoadingService, SettingsService } from '../../providers';
 import { DATA, SORT_TYPES } from '../../models/Common';
@@ -22,7 +22,8 @@ export class TodoListPage {
     private storage: Storage,
     private loadingService: LoadingService,
     private modalCtrl: ModalController,
-    private settingsSetvice: SettingsService
+    private settingsSetvice: SettingsService,
+    private alertCtrl: AlertController
   ) {
   }
 
@@ -149,13 +150,11 @@ export class TodoListPage {
     })
   }
 
-  deleteTodo(item: Todo, slidingList: any): void {
+  deleteTodo(item: Todo): void {
     if (!item) {
       return;
     }
-    if (slidingList) {
-      slidingList.close();
-    }
+
     this.loadingService.presentLoading('Deleting...');
     this.todoService.deleteTodo(item.id).subscribe((response: any) => {
       if (response) {
@@ -228,6 +227,34 @@ export class TodoListPage {
       default:
         break;
     }
+  }
+
+  openDeleteTodoConfirm(item: Todo, slidingList: any): void {
+    if (!item) {
+      return;
+    }
+    if (slidingList) {
+      slidingList.close();
+    }
+
+    let alert = this.alertCtrl.create({
+      title: `Delete`,
+      message: `Are you sure you want to delete this item? This action cannot be undone.`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.deleteTodo(item);
+          }
+        }
+      ],
+      cssClass: 'td-alert-danger'
+    });
+    alert.present();
   }
 
 

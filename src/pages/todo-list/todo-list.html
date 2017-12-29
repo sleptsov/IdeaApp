@@ -43,14 +43,14 @@
         </div>
         <ion-icon item-end name="link" color="dark" *ngIf="item.link" (click)="visitLink(item.link)"></ion-icon>
         <ion-icon item-end name="create" color="primary" *ngIf="!isMobile" (click)="openEditModal(item)"></ion-icon>
-        <ion-icon item-end name="trash" color="danger" *ngIf="!isMobile" (click)="deleteTodo(item)"></ion-icon>
+        <ion-icon item-end name="trash" color="danger" *ngIf="!isMobile" (click)="openDeleteTodoConfirm(item)"></ion-icon>
       </ion-item>
       <ion-item-options side="right" *ngIf="isMobile">
         <button ion-button color="primary" (click)="openEditModal(item, slidingList)">
           <ion-icon name="create"></ion-icon>
           Edit
         </button>
-        <button ion-button color="danger" (click)="deleteTodo(item, slidingList)">
+        <button ion-button color="danger" (click)="openDeleteTodoConfirm(item, slidingList)">
           <ion-icon name="trash"></ion-icon>
           Delete
         </button>
