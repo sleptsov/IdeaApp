@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController, AlertController, MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ToDoService, LoadingService, SettingsService } from '../../providers';
-import { DATA, SORT_TYPES } from '../../models/Common';
+import { DATA, SORT_TYPES, TODOS_VIEW_STATUS } from '../../models/Common';
 import { Todo } from '../../models/Todo';
 import { ModalPage } from '../index';
 
@@ -17,6 +17,8 @@ export class TodoListPage {
   sortTypes = SORT_TYPES;
   initialSortBy: string = this.sortTypes.QUEUEING;
   orderedBy: boolean = false;
+  todoViewStatus = TODOS_VIEW_STATUS;
+  initialTodoShow: string = this.todoViewStatus.ALL;
 
   constructor(
     private todoService: ToDoService,
@@ -288,6 +290,25 @@ export class TodoListPage {
   openFilterMenu(): void {
     this.menuCtrl.enable(true, 'todoListMenu');
     this.menuCtrl.open('todoListMenu');
+  }
+
+  setDoneTodoView(status: string): void {
+    if (!status) {
+      return;
+    }
+    this.initialTodoShow = status;
+  }
+
+  isHidden(todo: Todo): boolean {
+    return (todo.IsComplete && this.initialTodoShow === this.todoViewStatus.NOTDONE) || (!todo.IsComplete && this.initialTodoShow === this.todoViewStatus.DONE);
+  }
+
+  isAllDone(todos: Todo[]): boolean {
+    return todos.every(item => item.IsComplete);
+  }
+
+  isOneDone(todos: Todo[]): boolean {
+    return todos.every(item => !item.IsComplete);
   }
 
 }

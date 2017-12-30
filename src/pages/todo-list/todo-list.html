@@ -27,9 +27,14 @@
       <ion-icon name="add-circle" (click)="openAddModal()"></ion-icon> to add one.</h4>
   </div>
 
+  <div text-center *ngIf="todos?.length">
+    <h3 color="dark" margin-top *ngIf="isAllDone(todos) && initialTodoShow === todoViewStatus.NOTDONE">You finished all your todos.</h3>
+    <h3 color="dark" margin-top *ngIf="isOneDone(todos) && initialTodoShow === todoViewStatus.DONE">Finish at least one todo.</h3>
+  </div>
+
   <ion-list *ngIf="todos">
     <ion-item-sliding #slidingList *ngFor="let item of todos">
-      <ion-item class="todo-item-wrapper" [class.done]="item?.IsComplete">
+      <ion-item class="todo-item-wrapper" [class.done]="item?.IsComplete" [hidden]="isHidden(item)">
         <button item-start ion-button icon-only large clear color="dark" (click)="updateStatus(item)">
           <ion-icon [name]="item?.IsComplete ? 'checkbox-outline' : 'square-outline'"></ion-icon>
         </button>
@@ -37,7 +42,7 @@
         <!-- Browser view -->
         <p class="todo-text" *ngIf="!isMobile">
           <span class="queueing">{{item?.Queueing}}</span>
-          <a class="taskName link" *ngIf="item?.Link" href="{{item?.Link}}">{{item?.TaskName}}</a>
+          <a class="taskName link" target="_blank" *ngIf="item?.Link" href="{{item?.Link}}">{{item?.TaskName}}</a>
           <span class="taskName" *ngIf="!item?.Link">{{item?.TaskName}}</span>
         </p>
 
@@ -91,6 +96,18 @@
 
   <ion-content padding-vertical>
     <ion-list class="td-filter-list">
+      <ion-item-group>
+        <ion-item-divider color="light">Show tasks</ion-item-divider>
+        <button menuClose="todoListMenu" ion-item icon-end (click)="setDoneTodoView(todoViewStatus.ALL)" [class.selected]="initialTodoShow === todoViewStatus.ALL">All
+          <ion-icon *ngIf="initialTodoShow === todoViewStatus.ALL" name="checkmark"></ion-icon>
+        </button>
+        <button menuClose="todoListMenu" ion-item icon-end (click)="setDoneTodoView(todoViewStatus.DONE)" [class.selected]="initialTodoShow === todoViewStatus.DONE">Finished
+          <ion-icon *ngIf="initialTodoShow === todoViewStatus.DONE" name="checkmark"></ion-icon>
+        </button>
+        <button menuClose="todoListMenu" ion-item icon-end (click)="setDoneTodoView(todoViewStatus.NOTDONE)" [class.selected]="initialTodoShow === todoViewStatus.NOTDONE">Unfinished
+          <ion-icon *ngIf="initialTodoShow === todoViewStatus.NOTDONE" name="checkmark"></ion-icon>
+        </button>
+      </ion-item-group>
       <ion-item-group>
         <ion-item-divider color="light">Order</ion-item-divider>
         <button menuClose="todoListMenu" ion-item class="order-btn" (click)="orderBy()">

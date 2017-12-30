@@ -7,3 +7,9 @@ export enum SORT_TYPES {
     MODIFIED = 'ModifiedOn',
     QUEUEING = 'Queueing'
 }
+
+export enum TODOS_VIEW_STATUS {
+    ALL = 'All',
+    DONE = 'Complete',
+    NOTDONE = 'UnComplete'
+}
