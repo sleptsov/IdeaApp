@@ -15,7 +15,8 @@ export class TodoListPage {
   todos: Todo[];
   isMobile: boolean;
   sortTypes = SORT_TYPES;
-  initialSortBy: string = this.sortTypes.CREATED;
+  initialSortBy: string = this.sortTypes.QUEUEING;
+  orderedBy: boolean = false;
 
   constructor(
     private todoService: ToDoService,
@@ -116,7 +117,7 @@ export class TodoListPage {
     if (!todo) {
       return;
     }
-    todo.isComplete = !todo.isComplete;
+    todo.IsComplete = !todo.IsComplete;
 
     this.loadingService.presentLoading('Saving...');
     this.todoService.editTodo(todo).subscribe((response: any) => {
@@ -138,11 +139,11 @@ export class TodoListPage {
   updateTodos(todo: Todo, todos: Todo[] = this.todos): Todo[] {
     return todos.map(item => {
       return {
-        id: item.id,
-        taskName: item.id === todo.id ? todo.taskName : item.taskName,
-        isComplete: item.id === todo.id ? todo.isComplete : item.isComplete,
-        queueing: item.queueing,
-        link: item.id === todo.id ? todo.link : item.link,
+        Id: item.Id,
+        TaskName: item.Id === todo.Id ? todo.TaskName : item.TaskName,
+        IsComplete: item.Id === todo.Id ? todo.IsComplete : item.IsComplete,
+        Queueing: item.Id === todo.Id ? todo.Queueing : item.Queueing,
+        Link: item.Id === todo.Id ? todo.Link : item.Link,
         CreatedOn: item.CreatedOn,
         CreatedBy: item.CreatedBy,
         ModifiedOn: item.ModifiedOn,
@@ -157,9 +158,9 @@ export class TodoListPage {
     }
 
     this.loadingService.presentLoading('Deleting...');
-    this.todoService.deleteTodo(item.id).subscribe((response: any) => {
+    this.todoService.deleteTodo(item.Id).subscribe((response: any) => {
       if (response) {
-        let index: number = this.todos.findIndex((todo: Todo) => item.id === todo.id);
+        let index: number = this.todos.findIndex((todo: Todo) => item.Id === todo.Id);
         if (index > -1) {
           this.todos.splice(index, 1);
           if (this.todos.length > 0) {
@@ -192,14 +193,14 @@ export class TodoListPage {
     this.storage.get(DATA.TODOS).then((value) => {
       if (value) {
         this.todos = JSON.parse(value);
-        this.sortBy(this.sortTypes.CREATED);
+        this.sortBy(this.initialSortBy);
         this.loadingService.dismiss();
       } else {
         this.loadingService.presentLoading('Loading data...');
         this.todoService.loadTodos().subscribe((response: Todo[]) => {
           if (response) {
             this.todos = response;
-            this.sortBy(this.sortTypes.CREATED);
+            this.sortBy(this.initialSortBy);
             this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
           } else {
             console.log('Some thing went wrong');
@@ -216,6 +217,11 @@ export class TodoListPage {
     });
   }
 
+  orderBy(order?: boolean): void {
+    this.orderedBy = !this.orderedBy;
+    this.sortBy(this.initialSortBy);
+  }
+
 
   sortBy(sortBy: string): void {
     if (!sortBy) {
@@ -223,11 +229,27 @@ export class TodoListPage {
     }
     switch (sortBy) {
       case this.sortTypes.CREATED:
-        this.todos.sort((a, b): any => new Date(a.CreatedOn).getTime() - new Date(b.CreatedOn).getTime());
+        if (this.orderedBy === false) {
+          this.todos.sort((a, b): any => new Date(a.CreatedOn).getTime() - new Date(b.CreatedOn).getTime());
+        } else {
+          this.todos.sort((a, b): any => new Date(b.CreatedOn).getTime() - new Date(a.CreatedOn).getTime());
+        }
         this.initialSortBy = sortBy;
         break;
       case this.sortTypes.MODIFIED:
-        this.todos.sort((a, b): any => new Date(a.ModifiedOn).getTime() - new Date(b.ModifiedOn).getTime());
+        if (this.orderedBy === false) {
+          this.todos.sort((a, b): any => new Date(a.ModifiedOn).getTime() - new Date(b.ModifiedOn).getTime());
+        } else {
+          this.todos.sort((a, b): any => new Date(b.ModifiedOn).getTime() - new Date(a.ModifiedOn).getTime());
+        }
+        this.initialSortBy = sortBy;
+        break;
+      case this.sortTypes.QUEUEING:
+        if (this.orderedBy === false) {
+          this.todos.sort((a, b): any => a.Queueing - b.Queueing);
+        } else {
+          this.todos.sort((a, b): any => b.Queueing - a.Queueing);
+        }
         this.initialSortBy = sortBy;
         break;
       default:

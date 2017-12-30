@@ -1,11 +1,33 @@
 page-todo-list {
 
     .todo-item-wrapper {
+
+        padding-left: 0;
+
         ion-label {
-            white-space: normal;
-            .date, .queueing {
+            //white-space: normal;
+
+            .date {
                 font-size: 12px;
                 margin-top: 5px;
+            }
+
+            .queueing {
+
+            }
+        }
+
+        .todo-text {
+            color: map-get($colors, dark);
+            margin: 0;
+            font-size: 1.2em;
+
+            .queueing {
+                font-weight: 500;
+            }
+
+            ion-icon {
+                font-size: 1em;
             }
         }
         &.done {
@@ -13,6 +35,10 @@ page-todo-list {
             color: #666;
             .todo-text {
                 color: #666;
+                a.link {
+                    text-decoration: none;
+                    color: #666;
+                }
     
             }
             ion-icon {

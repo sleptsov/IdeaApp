@@ -4,5 +4,6 @@ export enum DATA {
 
 export enum SORT_TYPES {
     CREATED = 'CreatedOn',
-    MODIFIED = 'ModifiedOn'
+    MODIFIED = 'ModifiedOn',
+    QUEUEING = 'Queueing'
 }

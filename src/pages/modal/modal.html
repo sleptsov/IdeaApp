@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>{{todo?.id ? 'Edit ToDo' : 'New ToDo'}}</ion-title>
+    <ion-title>{{todo?.Id ? 'Edit ToDo' : 'New ToDo'}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="closeModal()">
         <ion-icon name="close"></ion-icon>
@@ -17,27 +17,39 @@
   <form [formGroup]="todoForm" (ngSubmit)="onSubmit(todoForm.value)" novalidate>
     <ion-item margin-bottom>
       <ion-label stacked>Task name</ion-label>
-      <ion-input type="text" formControlName="taskName" spellcheck="true" autocapitalize="true"></ion-input>
+      <ion-input type="text" formControlName="TaskName" spellcheck="true" autocapitalize="true"></ion-input>
     </ion-item>
-    <p class="danger" *ngIf="(todoForm.get('taskName').touched || todoForm.get('taskName').dirty) && todoForm.get('taskName').errors">
-      <span *ngIf="todoForm.get('taskName').hasError('required')">
+    <p class="danger" *ngIf="(todoForm.get('TaskName').touched || todoForm.get('TaskName').dirty) && todoForm.get('TaskName').errors">
+      <span *ngIf="todoForm.get('TaskName').hasError('required')">
         Task name is required.
       </span>
-      <span *ngIf="todoForm.get('taskName').hasError('maxlength')">
+      <span *ngIf="todoForm.get('TaskName').hasError('maxlength')">
         Task name max length is {{todoMaxLength}}.
       </span>
     </p>
     <ion-item margin-bottom>
       <ion-label stacked>Link</ion-label>
-      <ion-input type="url" formControlName="link" spellcheck="false" autocapitalize="false"></ion-input>
+      <ion-input type="url" formControlName="Link" spellcheck="false" autocapitalize="false"></ion-input>
     </ion-item>
-    <p class="danger" *ngIf="(todoForm.get('link').touched || todoForm.get('link').dirty) && todoForm.get('link').errors">
-      <span *ngIf="todoForm.get('link').hasError('pattern')">
+    <p class="danger" *ngIf="(todoForm.get('Link').touched || todoForm.get('Link').dirty) && todoForm.get('Link').errors">
+      <span *ngIf="todoForm.get('Link').hasError('pattern')">
         Link should start with http(s):// or www.
       </span>
     </p>
+    <ion-item margin-bottom>
+      <ion-label stacked>Queueing</ion-label>
+      <ion-input type="number" formControlName="Queueing" min="0"></ion-input>
+    </ion-item>
+    <p class="danger" *ngIf="(todoForm.get('Queueing').touched || todoForm.get('Queueing').dirty) && todoForm.get('Queueing').errors">
+      <span *ngIf="todoForm.get('Queueing').hasError('min')">
+        Cannot be negative.
+      </span>
+      <span *ngIf="todoForm.get('Queueing').hasError('required')">
+        Queueing is required.
+      </span>
+    </p>
     <button ion-button outline type="button" (click)="closeModal()">Cancel</button>
-    <button ion-button outline type="submit" [disabled]="!todoForm.valid">{{todo?.id ? 'Edit' : 'Create'}}</button>
+    <button ion-button outline type="submit" [disabled]="!todoForm.valid">{{todo?.Id ? 'Edit' : 'Create'}}</button>
   </form>
 
 </ion-content>
