@@ -41,17 +41,17 @@
 
         <!-- Browser view -->
         <p class="todo-text" *ngIf="!isMobile">
-          <span class="queueing">{{item?.Queueing}}</span>
           <a class="taskName link" target="_blank" *ngIf="item?.Link" href="{{item?.Link}}">{{item?.TaskName}}</a>
           <span class="taskName" *ngIf="!item?.Link">{{item?.TaskName}}</span>
+          <span class="queueing">{{item?.Queueing}}</span>
         </p>
 
         <!-- Mobile view -->
 
-        <p class="todo-text" *ngIf="isMobile">
-          <span class="queueing">{{item?.Queueing}}</span>
+        <div class="todo-text" *ngIf="isMobile">
           <span class="taskName">{{item?.TaskName}}</span>
-        </p>
+          <span class="queueing">{{item?.Queueing}}</span>
+        </div>
 
         <button class="btn-edit" ion-button item-end large icon-only clear *ngIf="!isMobile" (click)="openEditModal(item)">
           <ion-icon name="create" color="primary"></ion-icon>

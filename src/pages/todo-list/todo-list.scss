@@ -4,26 +4,23 @@ page-todo-list {
 
         padding-left: 0;
 
-        ion-label {
-            //white-space: normal;
-
-            .date {
-                font-size: 12px;
-                margin-top: 5px;
-            }
-
-            .queueing {
-
-            }
-        }
-
         .todo-text {
             color: map-get($colors, dark);
             margin: 0;
             font-size: 1.2em;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .taskName {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 
             .queueing {
                 font-weight: 500;
+                margin-left: 10px;
             }
 
             ion-icon {
@@ -31,10 +28,15 @@ page-todo-list {
             }
         }
         &.done {
-            text-decoration: line-through;
             color: #666;
             .todo-text {
                 color: #666;
+                .taskName {
+                    text-decoration: line-through;
+                }
+                .queueing {
+                    font-weight: normal;
+                }
                 a.link {
                     text-decoration: none;
                     color: #666;
