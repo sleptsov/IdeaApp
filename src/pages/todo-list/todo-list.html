@@ -35,16 +35,25 @@
   <ion-list *ngIf="todos">
     <ion-item-sliding #slidingList *ngFor="let item of todos">
       <ion-item class="todo-item-wrapper" [class.done]="item?.IsComplete" [hidden]="isHidden(item)">
-        <button item-start ion-button icon-only large clear color="dark" (click)="updateStatus(item)">
-          <ion-icon [name]="item?.IsComplete ? 'checkbox-outline' : 'square-outline'"></ion-icon>
-        </button>
 
         <!-- Browser view -->
+        <!--         <button item-start ion-button icon-only clear color="dark" *ngIf="!isMobile" (click)="updateStatus(item)">
+          <ion-icon [name]="item?.IsComplete ? 'checkbox-outline' : 'square-outline'"></ion-icon>
+        </button> -->
+
         <p class="todo-text" *ngIf="!isMobile">
           <a class="taskName link" target="_blank" *ngIf="item?.Link" href="{{item?.Link}}">{{item?.TaskName}}</a>
           <span class="taskName" *ngIf="!item?.Link">{{item?.TaskName}}</span>
           <span class="queueing">{{item?.Queueing}}</span>
         </p>
+
+        <button class="btn-edit" ion-button item-end icon-only clear *ngIf="!isMobile" (click)="openEditModal(item)">
+          <ion-icon name="create" color="primary"></ion-icon>
+        </button>
+        <button class="btn-delete" ion-button item-end icon-only clear *ngIf="!isMobile" (click)="openDeleteTodoConfirm(item)">
+          <ion-icon name="trash" color="danger"></ion-icon>
+        </button>
+
 
         <!-- Mobile view -->
 
@@ -53,12 +62,6 @@
           <span class="queueing">{{item?.Queueing}}</span>
         </div>
 
-        <button class="btn-edit" ion-button item-end large icon-only clear *ngIf="!isMobile" (click)="openEditModal(item)">
-          <ion-icon name="create" color="primary"></ion-icon>
-        </button>
-        <button class="btn-delete" ion-button item-end large icon-only clear *ngIf="!isMobile" (click)="openDeleteTodoConfirm(item)">
-          <ion-icon name="trash" color="danger"></ion-icon>
-        </button>
       </ion-item>
       <ion-item-options side="right" *ngIf="isMobile">
         <button ion-button color="secondary" *ngIf="item?.Link" (click)="visitLink(item?.Link, slidingList)">

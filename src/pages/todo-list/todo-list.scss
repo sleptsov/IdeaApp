@@ -19,8 +19,8 @@ page-todo-list {
             }
 
             .queueing {
-                font-weight: 500;
                 margin-left: 10px;
+                font-size: 12px;
             }
 
             ion-icon {
@@ -34,9 +34,6 @@ page-todo-list {
                 .taskName {
                     text-decoration: line-through;
                 }
-                .queueing {
-                    font-weight: normal;
-                }
                 a.link {
                     text-decoration: none;
                     color: #666;
@@ -46,10 +43,6 @@ page-todo-list {
             ion-icon {
                 color: rgba(0, 0, 0, 0.25);
             }
-        }
-
-        .todo-icon-status {
-            font-size: 2.8rem;
         }
 
         .btn-edit:hover {

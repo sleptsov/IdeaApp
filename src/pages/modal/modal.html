@@ -48,6 +48,10 @@
         Queueing is required.
       </span>
     </p>
+    <ion-item margin-bottom>
+      <ion-label>Status: {{todoForm.get('IsComplete').value ? 'Complited' : 'Uncomplited'}}</ion-label>
+      <ion-toggle formControlName="IsComplete"></ion-toggle>
+    </ion-item>
     <button ion-button outline type="button" (click)="closeModal()">Cancel</button>
     <button ion-button outline type="submit" [disabled]="!todoForm.valid">{{todo?.Id ? 'Edit' : 'Create'}}</button>
   </form>

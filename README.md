@@ -15,11 +15,17 @@ Unit - `npm test`
 
 With coverage run `npm run test-covegare`, browse `index.html` file in `coverage` folder     
 
-End-to-End - `npm run e2e`         
+End-to-End - `npm run e2e`   
 
+### For production
+
+Build for iOS - `ionic cordova build ios --prod`         
+Build for Android - `ionic cordova build android --prod`         
 
 ### Sign APK
 See `https://ionicframework.com/docs/intro/deploying/`
+Android release key: not generated        
+Apple account: not assigned           
 
 ### About    
 ToDo App modile
