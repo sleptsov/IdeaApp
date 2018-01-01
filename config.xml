@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.todo.app.modile" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.todo.app.modile" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>ToDoApp</name>
     <description>An awesome ToDo app.</description>
-    <author email="hi@email" href="http://someurl.com/">Author</author>
+    <author email="sleptsov.denis@gmail.com">Slieptsov Denys</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
