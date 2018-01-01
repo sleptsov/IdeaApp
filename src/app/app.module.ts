@@ -13,6 +13,7 @@ import { config, dbconfig } from '../config/config';
 import { RestService, ToDoService, HeaderInterceptor, LoadingService, SettingsService } from '../providers/index';
 
 import { TodoListPage, ModalPage } from '../pages/index';
+
 @NgModule({
   declarations: [
     ToDoApp,
