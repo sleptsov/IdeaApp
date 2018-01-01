@@ -23,7 +23,7 @@ Build for iOS - `ionic cordova build ios --prod`
 Build for Android - `ionic cordova build android --prod`         
 
 ### Sign APK
-See `https://ionicframework.com/docs/intro/deploying/`
+See `https://ionicframework.com/docs/intro/deploying/`       
 Android release key: not generated        
 Apple account: not assigned           
 
