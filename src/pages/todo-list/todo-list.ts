@@ -79,6 +79,7 @@ export class TodoListPage {
     this.todoService.addTodo(newTodo).subscribe((response: any) => {
       if (response) {
         this.todos = [...this.todos, newTodo];
+        this.sortBy(this.initialSortBy);
         this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
       } else {
         console.log('Some thing went wrong');
@@ -102,6 +103,7 @@ export class TodoListPage {
     this.todoService.editTodo(todo).subscribe((response: any) => {
       if (response) {
         this.todos = this.updateTodos(todo);
+        this.sortBy(this.initialSortBy);
         this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
       } else {
         console.log('Some thing went wrong');
@@ -166,6 +168,7 @@ export class TodoListPage {
         if (index > -1) {
           this.todos.splice(index, 1);
           if (this.todos.length > 0) {
+            this.sortBy(this.initialSortBy);
             this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
           } else {
             this.storage.remove(DATA.TODOS);
