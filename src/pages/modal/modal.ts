@@ -30,10 +30,10 @@ export class ModalPage {
 
   initForm(): void {
     this.todoForm = this.fb.group({
-      TaskName: ['', Validators.compose([Validators.required, Validators.maxLength(this.todoMaxLength)])],
-      Link: ['', Validators.compose([Validators.pattern('^(http:\/\/|https:\/\/|www)(.*)')])],
-      Queueing: [null, Validators.compose([Validators.required, Validators.min(0)])],
-      IsComplete: [false]
+      taskName: ['', Validators.compose([Validators.required, Validators.maxLength(this.todoMaxLength)])],
+      link: ['', Validators.compose([Validators.pattern('^(http:\/\/|https:\/\/|www)(.*)')])],
+      queueing: [0, Validators.compose([Validators.required, Validators.min(0)])],
+      isComplete: [false]
     });
     this.patchForm(this.todo);
   }
@@ -41,10 +41,10 @@ export class ModalPage {
   patchForm(todo: Todo): void {
     if (todo) {
       this.todoForm.patchValue({
-        TaskName: todo.TaskName,
-        Link: todo.Link,
-        Queueing: todo.Queueing,
-        IsComplete: todo.IsComplete
+        taskName: todo.taskName,
+        link: todo.link,
+        queueing: todo.queueing,
+        isComplete: todo.isComplete
       })
     }
   }

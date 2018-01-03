@@ -22,41 +22,4 @@ describe('RestService', () => {
     it(`should be created`, () => {
         expect(restService).toBeTruthy();
     });
-
-    it(`should issue a GET request`, () => {
-        restService.fetch(`https://google.com`).subscribe();
-        httpMock.expectOne({
-            url: `https://google.com`,
-            method: 'GET'
-        });
-    });
-
-    it(`should issue a POST request`, () => {
-        restService.post(`https://google.com`, null).subscribe();
-        httpMock.expectOne({
-            url: `https://google.com`,
-            method: 'POST'
-        });
-    });
-
-    it(`should issue a PUT request`, () => {
-        restService.put(`https://google.com`, null).subscribe();
-        httpMock.expectOne({
-            url: `https://google.com`,
-            method: 'PUT'
-        });
-    });
-
-    it(`should issue a DELETE request`, () => {
-        restService.delete(`https://google.com`).subscribe();
-        httpMock.expectOne({
-            url: `https://google.com`,
-            method: 'DELETE'
-        });
-    });
-
-    it(`should NOT fail when sending an un-matched request`, () => {
-        restService.fetch(`https://google.com/foo`).subscribe();
-        httpMock.match(`https://google.com`);
-    });
 });

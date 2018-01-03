@@ -7,7 +7,9 @@ npm install -g ionic cordova
 npm install
 ionic serve
 ```
-Browse the application at `http://localhost:8100/`
+Browse the application at `http://localhost:8100/`       
+
+Run mock json-server - `npm run server`     
 
 ### For testing 
 

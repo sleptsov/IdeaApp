@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RestService } from '../index';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { Todo } from '../../models/Todo';
 
-const MOCK_DATA_PATH: string = 'assets/mocks/MOCK_DATA.json';
 
 @Injectable()
 export class ToDoService {
@@ -15,32 +13,19 @@ export class ToDoService {
   }
 
   loadTodos(): Observable<Todo[]> {
-    // mock response
-    return this.restService.fetch(MOCK_DATA_PATH);
+    return this.restService.fetch('/todos');
   }
 
   deleteTodo(id: number): Observable<any> {
-    // return this.restService.delete(``);
-
-    // type the Observable
-    // mock response
-    return of(true);
+    return this.restService.delete(`/todos/${id}`);
   }
 
-  addTodo(todo: Todo): Observable<any> {
-    // return this.restService.post(``, todo);
-
-    // type the Observable
-    // mock response
-    return of(true);
+  addTodo(todo: Todo): Observable<Todo> {
+    return this.restService.post(`/todos`, todo);
   }
 
-  editTodo(todo: Todo): Observable<any> {
-    // return this.restService.put(``, todo);
-
-    // type the Observable
-    // mock response
-    return of(true);
+  editTodo(todo: Todo): Observable<Todo> {
+    return this.restService.put(`/todos/${todo.id}`, todo);
   }
 
 }

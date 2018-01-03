@@ -1,4 +1,4 @@
-import { LoadingService, ToDoService } from '../src/providers/index';
+import { LoadingService, ToDoService, ToastService } from '../src/providers/index';
 import { Observable } from 'rxjs/Observable';
 import { Todo } from '../src/models/Todo';
 import { MockTodos } from './mocks-data';
@@ -19,4 +19,10 @@ export class ToDoServiceMocks {
 
 export class SettingsServiceMock {
 
+}
+
+export class ToastServiceMocks extends ToastService {
+    presentToast() {
+        return;
+    }
 }

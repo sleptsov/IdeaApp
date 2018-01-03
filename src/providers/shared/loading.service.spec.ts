@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { SettingsService } from '../../providers';
 import { LoadingController, Loading } from 'ionic-angular';
 import { LoadingService } from './loading.service'
 import { LoadingControllerMocks } from '../../../test-config/mocks-ionic';

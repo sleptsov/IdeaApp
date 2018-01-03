@@ -1,18 +1,35 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import {
+  IonicApp,
+  IonicModule,
+  IonicErrorHandler
+} from 'ionic-angular';
 import { ToDoApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule
+} from '@angular/common/http';
 
 import { config, dbconfig } from '../config/config';
-import { RestService, ToDoService, HeaderInterceptor, LoadingService, SettingsService } from '../providers/index';
+import {
+  RestService,
+  ToDoService,
+  HeaderInterceptor,
+  LoadingService,
+  SettingsService,
+  ToastService
+} from '../providers/index';
 
-import { TodoListPage, ModalPage } from '../pages/index';
+import {
+  TodoListPage,
+  ModalPage
+} from '../pages/index';
 
 @NgModule({
   declarations: [
@@ -41,6 +58,7 @@ import { TodoListPage, ModalPage } from '../pages/index';
     ToDoService,
     LoadingService,
     SettingsService,
+    ToastService,
     {
       provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true,
     }

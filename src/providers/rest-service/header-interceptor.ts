@@ -12,7 +12,7 @@ export class HeaderInterceptor implements HttpInterceptor {
             setHeaders: {
                 'Content-Type': 'application/json'
             },
-            url: req.url.replace('http://', 'https://')
+            //url: req.url.replace('http://', 'https://')
         });
 
         return next.handle(authReq);

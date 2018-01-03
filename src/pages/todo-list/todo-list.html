@@ -21,30 +21,27 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-  <div padding text-center *ngIf="!todos?.length">
+  <div padding text-center *ngIf="!todos?.length && !isLoading">
     <h3>You have no todos. </h3>
     <h4 class="helper-text">Click
       <ion-icon name="add-circle" (click)="openAddModal()"></ion-icon> to add one.</h4>
   </div>
 
-  <div text-center *ngIf="todos?.length">
+  <div text-center *ngIf="todos?.length && !isLoading">
     <h3 color="dark" margin-top *ngIf="isAllDone(todos) && initialTodoShow === todoViewStatus.NOTDONE">You finished all your todos.</h3>
     <h3 color="dark" margin-top *ngIf="isOneDone(todos) && initialTodoShow === todoViewStatus.DONE">Finish at least one todo.</h3>
   </div>
 
   <ion-list *ngIf="todos">
     <ion-item-sliding #slidingList *ngFor="let item of todos">
-      <ion-item class="todo-item-wrapper" [class.done]="item?.IsComplete" [hidden]="isHidden(item)">
+      <ion-item class="todo-item-wrapper" [class.done]="item?.isComplete" [hidden]="isHidden(item)">
 
         <!-- Browser view -->
-        <!--         <button item-start ion-button icon-only clear color="dark" *ngIf="!isMobile" (click)="updateStatus(item)">
-          <ion-icon [name]="item?.IsComplete ? 'checkbox-outline' : 'square-outline'"></ion-icon>
-        </button> -->
 
         <p class="todo-text" *ngIf="!isMobile">
-          <a class="taskName link" target="_blank" *ngIf="item?.Link" href="{{item?.Link}}">{{item?.TaskName}}</a>
-          <span class="taskName" *ngIf="!item?.Link">{{item?.TaskName}}</span>
-          <span class="queueing">{{item?.Queueing}}</span>
+          <a class="taskName link" target="_blank" *ngIf="item?.link" href="{{item?.link}}">{{item?.taskName}}</a>
+          <span class="taskName" *ngIf="!item?.link">{{item?.taskName}}</span>
+          <span class="queueing">{{item?.queueing}}</span>
         </p>
 
         <button class="btn-edit" ion-button item-end icon-only clear *ngIf="!isMobile" (click)="openEditModal(item)">
@@ -58,13 +55,13 @@
         <!-- Mobile view -->
 
         <div class="todo-text" *ngIf="isMobile">
-          <span class="taskName">{{item?.TaskName}}</span>
-          <span class="queueing">{{item?.Queueing}}</span>
+          <span class="taskName">{{item?.taskName}}</span>
+          <span class="queueing">{{item?.queueing}}</span>
         </div>
 
       </ion-item>
       <ion-item-options side="right" *ngIf="isMobile">
-        <button ion-button color="secondary" *ngIf="item?.Link" (click)="visitLink(item?.Link, slidingList)">
+        <button ion-button color="secondary" *ngIf="item?.link" (click)="visitLink(item?.link, slidingList)">
           <ion-icon name="link"></ion-icon>
           &nbsp;&nbsp;&nbsp;Link&nbsp;&nbsp;&nbsp;
         </button>

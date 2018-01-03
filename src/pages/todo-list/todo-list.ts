@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController, AlertController, MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { ToDoService, LoadingService, SettingsService } from '../../providers';
+import { ToDoService, LoadingService, SettingsService, ToastService } from '../../providers';
 import { DATA, SORT_TYPES, TODOS_VIEW_STATUS } from '../../models/Common';
 import { Todo } from '../../models/Todo';
 import { ModalPage } from '../index';
@@ -19,6 +19,7 @@ export class TodoListPage {
   orderedBy: boolean = false;
   todoViewStatus = TODOS_VIEW_STATUS;
   initialTodoShow: string = this.todoViewStatus.ALL;
+  isLoading: boolean = false;
 
   constructor(
     private todoService: ToDoService,
@@ -26,6 +27,7 @@ export class TodoListPage {
     private loadingService: LoadingService,
     private modalCtrl: ModalController,
     private settingsSetvice: SettingsService,
+    private toastService: ToastService,
     private alertCtrl: AlertController,
     private menuCtrl: MenuController
   ) {
@@ -74,19 +76,25 @@ export class TodoListPage {
     this.loadingService.presentLoading('Saving...');
 
     let newTodo: Todo = new Todo();
-    newTodo = Object.assign({}, newTodo, data);
+    newTodo = Object.assign({}, newTodo, data, {
+      // to convert queueing Number
+      queueing: Number(data.queueing)
+    });
 
-    this.todoService.addTodo(newTodo).subscribe((response: any) => {
+    this.todoService.addTodo(newTodo).subscribe((response: Todo) => {
       if (response) {
-        this.todos = [...this.todos, newTodo];
+        this.todos = [...this.todos, response];
         this.sortBy(this.initialSortBy);
         this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+        this.toastService.presentToast(`Todo added.`);
       } else {
+        this.showAlert('Error', 'Some thing went wrong');
         console.log('Some thing went wrong');
       }
     }, (error) => {
       this.loadingService.dismiss();
-      console.log(error)
+      this.showAlert('Error', error);
+      console.log(error);
     },
       () => {
         this.loadingService.dismiss();
@@ -100,39 +108,19 @@ export class TodoListPage {
     this.loadingService.presentLoading('Saving...');
     todo = Object.assign({}, todo, data);
 
-    this.todoService.editTodo(todo).subscribe((response: any) => {
+    this.todoService.editTodo(todo).subscribe((response: Todo) => {
       if (response) {
         this.todos = this.updateTodos(todo);
         this.sortBy(this.initialSortBy);
         this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+        this.toastService.presentToast(response.isComplete === true ? `Awesome! Keep doing!` : `Todo saved.`);
       } else {
+        this.showAlert('Error', 'Some thing went wrong');
         console.log('Some thing went wrong');
       }
     }, (error) => {
       this.loadingService.dismiss();
-      console.log(error)
-    },
-      () => {
-        this.loadingService.dismiss();
-      });
-  }
-
-  updateStatus(todo: Todo): void {
-    if (!todo) {
-      return;
-    }
-    todo.IsComplete = !todo.IsComplete;
-
-    this.loadingService.presentLoading('Saving...');
-    this.todoService.editTodo(todo).subscribe((response: any) => {
-      if (response) {
-        this.todos = this.updateTodos(todo);
-        this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
-      } else {
-        console.log('Some thing went wrong');
-      }
-    }, (error) => {
-      this.loadingService.dismiss();
+      this.showAlert('Error', error);
       console.log(error)
     },
       () => {
@@ -143,15 +131,15 @@ export class TodoListPage {
   updateTodos(todo: Todo, todos: Todo[] = this.todos): Todo[] {
     return todos.map(item => {
       return {
-        Id: item.Id,
-        TaskName: item.Id === todo.Id ? todo.TaskName : item.TaskName,
-        IsComplete: item.Id === todo.Id ? todo.IsComplete : item.IsComplete,
-        Queueing: item.Id === todo.Id ? todo.Queueing : item.Queueing,
-        Link: item.Id === todo.Id ? todo.Link : item.Link,
-        CreatedOn: item.CreatedOn,
-        CreatedBy: item.CreatedBy,
-        ModifiedOn: item.ModifiedOn,
-        ModifiedBy: item.ModifiedBy
+        id: item.id,
+        taskName: item.id === todo.id ? todo.taskName : item.taskName,
+        isComplete: item.id === todo.id ? todo.isComplete : item.isComplete,
+        queueing: item.id === todo.id ? Number(todo.queueing) : Number(item.queueing),
+        link: item.id === todo.id ? todo.link : item.link,
+        createdOn: item.createdOn,
+        createdBy: item.createdBy,
+        modifiedOn: item.modifiedOn,
+        modifiedBy: item.modifiedBy
       }
     })
   }
@@ -162,23 +150,31 @@ export class TodoListPage {
     }
 
     this.loadingService.presentLoading('Deleting...');
-    this.todoService.deleteTodo(item.Id).subscribe((response: any) => {
+
+    this.todoService.deleteTodo(item.id).subscribe((response: any) => {
       if (response) {
-        let index: number = this.todos.findIndex((todo: Todo) => item.Id === todo.Id);
+        let index: number = this.todos.findIndex((todo: Todo) => item.id === todo.id);
+
         if (index > -1) {
           this.todos.splice(index, 1);
           if (this.todos.length > 0) {
             this.sortBy(this.initialSortBy);
             this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+            this.toastService.presentToast(`Todo deleted.`);
           } else {
             this.storage.remove(DATA.TODOS);
           }
         }
       } else {
+        this.showAlert('Error', 'Some thing went wrong');
         console.log('Some thing went wrong');
       }
     },
-      (error) => { console.log(error) },
+      (error) => {
+        this.loadingService.dismiss();
+        this.showAlert('Error', error);
+        console.log(error);
+      },
       () => {
         this.loadingService.dismiss();
       });
@@ -195,11 +191,17 @@ export class TodoListPage {
   }
 
   loadTodos(): void {
+    this.isLoading = true;
     this.storage.get(DATA.TODOS).then((value) => {
       if (value) {
         this.todos = JSON.parse(value);
         this.sortBy(this.initialSortBy);
         this.loadingService.dismiss();
+        this.isLoading = false;
+        if (this.todos.length > 0) {
+          let undone = this.todos.filter(t => !t.isComplete);
+          this.toastService.presentToast(`You have ${undone.length} undone todos.`);
+        }
       } else {
         this.loadingService.presentLoading('Loading data...');
         this.todoService.loadTodos().subscribe((response: Todo[]) => {
@@ -207,13 +209,21 @@ export class TodoListPage {
             this.todos = response;
             this.sortBy(this.initialSortBy);
             this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+            this.isLoading = false;
+            if (this.todos.length > 0) {
+              let undone = this.todos.filter(t => !t.isComplete);
+              this.toastService.presentToast(`You have ${undone.length} undone todos.`);
+            }
           } else {
+            this.showAlert('Error', 'Some thing went wrong');
             console.log('Some thing went wrong');
           }
         },
           (error) => {
+            this.showAlert('Error', error);
             this.loadingService.dismiss();
-            console.log(error)
+            console.log(error);
+            this.isLoading = false;
           },
           () => {
             this.loadingService.dismiss();
@@ -235,25 +245,25 @@ export class TodoListPage {
     switch (sortBy) {
       case this.sortTypes.CREATED:
         if (this.orderedBy === false) {
-          this.todos.sort((a, b): any => new Date(a.CreatedOn).getTime() - new Date(b.CreatedOn).getTime());
+          this.todos.sort((a, b): any => new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime());
         } else {
-          this.todos.sort((a, b): any => new Date(b.CreatedOn).getTime() - new Date(a.CreatedOn).getTime());
+          this.todos.sort((a, b): any => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime());
         }
         this.initialSortBy = sortBy;
         break;
       case this.sortTypes.MODIFIED:
         if (this.orderedBy === false) {
-          this.todos.sort((a, b): any => new Date(a.ModifiedOn).getTime() - new Date(b.ModifiedOn).getTime());
+          this.todos.sort((a, b): any => new Date(a.modifiedOn).getTime() - new Date(b.modifiedOn).getTime());
         } else {
-          this.todos.sort((a, b): any => new Date(b.ModifiedOn).getTime() - new Date(a.ModifiedOn).getTime());
+          this.todos.sort((a, b): any => new Date(b.modifiedOn).getTime() - new Date(a.modifiedOn).getTime());
         }
         this.initialSortBy = sortBy;
         break;
       case this.sortTypes.QUEUEING:
         if (this.orderedBy === false) {
-          this.todos.sort((a, b): any => a.Queueing - b.Queueing);
+          this.todos.sort((a, b): any => a.queueing - b.queueing);
         } else {
-          this.todos.sort((a, b): any => b.Queueing - a.Queueing);
+          this.todos.sort((a, b): any => b.queueing - a.queueing);
         }
         this.initialSortBy = sortBy;
         break;
@@ -303,15 +313,25 @@ export class TodoListPage {
   }
 
   isHidden(todo: Todo): boolean {
-    return (todo.IsComplete && this.initialTodoShow === this.todoViewStatus.NOTDONE) || (!todo.IsComplete && this.initialTodoShow === this.todoViewStatus.DONE);
+    return (todo.isComplete && this.initialTodoShow === this.todoViewStatus.NOTDONE) || (!todo.isComplete && this.initialTodoShow === this.todoViewStatus.DONE);
   }
 
   isAllDone(todos: Todo[]): boolean {
-    return todos.every(item => item.IsComplete);
+    return todos.every(item => item.isComplete);
   }
 
   isOneDone(todos: Todo[]): boolean {
-    return todos.every(item => !item.IsComplete);
+    return todos.every(item => !item.isComplete);
+  }
+
+  showAlert(title: string, message: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['OK'],
+      cssClass: 'td-alert-danger'
+    });
+    alert.present();
   }
 
 }

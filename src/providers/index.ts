@@ -4,3 +4,4 @@ export * from './todo-service/todo-service';
 
 export * from './shared/loading.service';
 export * from './shared/settings.service';
+export * from './shared/toast.service';

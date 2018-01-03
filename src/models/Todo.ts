@@ -1,33 +1,31 @@
 export class Todo {
-    Id: number;
-    TaskName: string;
-    IsComplete: boolean;
-    Queueing: number;
-    Link: string;
-    CreatedOn: string;
-    CreatedBy: number;
-    ModifiedOn: string;
-    ModifiedBy: number;
+    id?: number;
+    taskName: string;
+    isComplete: boolean;
+    queueing: number;
+    link: string;
+    createdOn?: string;
+    createdBy?: number;
+    modifiedOn?: string;
+    modifiedBy?: number;
 
     constructor(
-        Id: number = Math.floor(Math.random() * 1000) + 1,
-        TaskName: string = '',
-        IsComplete: boolean = false,
-        Queueing: number = Math.floor(Math.random() * 1000) + 1,
-        Link: string = '',
-        CreatedOn: string = new Date().toISOString(),
-        CreatedBy: number = 0,
-        ModifiedOn: string = new Date().toISOString(),
-        ModifiedBy: number = 0,
+        taskName: string = '',
+        isComplete: boolean = false,
+        queueing: number = 0,
+        link: string = '',
+        createdOn: string = new Date().toISOString(),
+        createdBy: number = 0,
+        modifiedOn: string = new Date().toISOString(),
+        modifiedBy: number = 0,
     ) {
-        this.Id = Id;
-        this.TaskName = TaskName;
-        this.IsComplete = IsComplete;
-        this.Link = Link;
-        this.CreatedOn = CreatedOn;
-        this.CreatedBy = CreatedBy;
-        this.ModifiedOn = ModifiedOn;
-        this.ModifiedBy = ModifiedBy;
-        this.Queueing = Queueing;
+        this.taskName = taskName;
+        this.isComplete = isComplete;
+        this.queueing = queueing;
+        this.link = link;
+        this.createdOn = createdOn;
+        this.createdBy = createdBy;
+        this.modifiedOn = modifiedOn;
+        this.modifiedBy = modifiedBy;
     }
 }

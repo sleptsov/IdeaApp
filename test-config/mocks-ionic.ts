@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { Page, TransitionDoneFn } from 'ionic-angular/navigation/nav-util';
 import { ComponentRef, EventEmitter, Renderer, ElementRef } from '@angular/core';
 import { Content, Header, Footer, Navbar } from 'ionic-angular/navigation/nav-interfaces';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 export class PlatformMocks {
   public ready(): Promise<{ String }> {
@@ -416,5 +417,9 @@ export class FacebookMocks {
 }
 
 export class CameraMocks {
+
+}
+
+export class ToastControllerMocks {
 
 }
