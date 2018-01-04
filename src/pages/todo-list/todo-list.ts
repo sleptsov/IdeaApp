@@ -105,6 +105,8 @@ export class TodoListPage {
     if (!todo || !data) {
       return;
     }
+
+    let isComplete: boolean = data.isComplete === true && todo.isComplete === false;
     this.loadingService.presentLoading('Saving...');
     todo = Object.assign({}, todo, data);
 
@@ -113,7 +115,7 @@ export class TodoListPage {
         this.todos = this.updateTodos(todo);
         this.sortBy(this.initialSortBy);
         this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
-        this.toastService.presentToast(response.isComplete === true ? `Awesome! Keep doing!` : `Todo saved.`);
+        this.toastService.presentToast(isComplete ? `Awesome! Keep doing!` : `Todo saved.`);
       } else {
         this.showAlert('Error', 'Some thing went wrong');
         console.log('Some thing went wrong');
