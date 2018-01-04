@@ -11,8 +11,7 @@ export class HeaderInterceptor implements HttpInterceptor {
         const authReq = req.clone({
             setHeaders: {
                 'Content-Type': 'application/json'
-            },
-            //url: req.url.replace('http://', 'https://')
+            }
         });
 
         return next.handle(authReq);

@@ -13,19 +13,19 @@ export class ToDoService {
   }
 
   loadTodos(): Observable<Todo[]> {
-    return this.restService.fetch('/todos');
+    return this.restService.fetch('/todo');
   }
 
   deleteTodo(id: number): Observable<any> {
-    return this.restService.delete(`/todos/${id}`);
+    return this.restService.delete(`/todo/${id}`);
   }
 
   addTodo(todo: Todo): Observable<Todo> {
-    return this.restService.post(`/todos`, todo);
+    return this.restService.post(`/todo`, todo);
   }
 
   editTodo(todo: Todo): Observable<Todo> {
-    return this.restService.put(`/todos/${todo.id}`, todo);
+    return this.restService.put(`/todo/${todo.id}`, todo);
   }
 
 }
