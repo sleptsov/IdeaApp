@@ -16,7 +16,7 @@ export class ToDoService {
     return this.restService.fetch('/todo');
   }
 
-  deleteTodo(id: number): Observable<any> {
+  deleteTodo(id: number): Observable<Todo> {
     return this.restService.delete(`/todo/${id}`);
   }
 

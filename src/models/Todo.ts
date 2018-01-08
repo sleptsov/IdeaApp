@@ -15,9 +15,9 @@ export class Todo {
         queueing: number = 0,
         link: string = '',
         createdOn: string = new Date().toISOString(),
-        createdBy: number = 0,
+        createdBy: number = 1,
         modifiedOn: string = new Date().toISOString(),
-        modifiedBy: number = 0,
+        modifiedBy: number = 1,
     ) {
         this.taskName = taskName;
         this.isComplete = isComplete;

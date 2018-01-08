@@ -69,7 +69,7 @@ export class TodoListPage {
     editModal.present();
   }
 
-  addTodo(data: any): void {
+  addTodo(data: Todo): void {
     if (!data) {
       return;
     }
@@ -78,7 +78,7 @@ export class TodoListPage {
     let newTodo: Todo = new Todo();
     newTodo = Object.assign({}, newTodo, data, {
       // to convert queueing Number
-      queueing: Number(data.queueing)
+      queueing: Number.parseInt(<any>data.queueing)
     });
 
     this.todoService.addTodo(newTodo).subscribe((response: Todo) => {
@@ -101,17 +101,26 @@ export class TodoListPage {
       });
   }
 
-  editTodo(todo: Todo, data: any): void {
+  editTodo(todo: Todo, data: Todo): void {
     if (!todo || !data) {
       return;
     }
-
+    let isChanged: boolean = todo.isComplete !== data.isComplete || todo.link !== data.link || todo.taskName !== data.taskName || todo.queueing !== data.queueing;
+    if (!isChanged) {
+      return;
+    }
     let isComplete: boolean = data.isComplete === true && todo.isComplete === false;
     this.loadingService.presentLoading('Saving...');
-    todo = Object.assign({}, todo, data);
+    todo = Object.assign({}, todo, data, {
+      // to convert queueing Number
+      queueing: Number.parseInt(<any>data.queueing),
+      modifiedOn: new Date().toISOString(),
+      modifiedBy: 1 // TODO set to userId when backend is ready
+    });
 
     this.todoService.editTodo(todo).subscribe((response: Todo) => {
-      if (response) {
+
+      if (true) { // Need to verify is it done on backend
         this.todos = this.updateTodos(todo);
         this.sortBy(this.initialSortBy);
         this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
@@ -136,12 +145,13 @@ export class TodoListPage {
         id: item.id,
         taskName: item.id === todo.id ? todo.taskName : item.taskName,
         isComplete: item.id === todo.id ? todo.isComplete : item.isComplete,
-        queueing: item.id === todo.id ? Number(todo.queueing) : Number(item.queueing),
+        queueing: item.id === todo.id ? Number.parseInt(<any>todo.queueing) : Number.parseInt(<any>item.queueing),
         link: item.id === todo.id ? todo.link : item.link,
         createdOn: item.createdOn,
         createdBy: item.createdBy,
-        modifiedOn: item.modifiedOn,
-        modifiedBy: item.modifiedBy
+        modifiedOn: item.id === todo.id ? todo.modifiedOn : item.modifiedOn,
+        modifiedBy: true === true ? item.modifiedBy : item.modifiedBy  // TODO set to userId when backend is ready
+        // userId === todo.modifiedBy ? item.modifiedBy : userId
       }
     })
   }
@@ -153,7 +163,7 @@ export class TodoListPage {
 
     this.loadingService.presentLoading('Deleting...');
 
-    this.todoService.deleteTodo(item.id).subscribe((response: any) => {
+    this.todoService.deleteTodo(item.id).subscribe((response: Todo) => {
       if (response) {
         let index: number = this.todos.findIndex((todo: Todo) => item.id === todo.id);
 

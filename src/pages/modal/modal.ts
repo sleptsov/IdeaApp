@@ -31,7 +31,7 @@ export class ModalPage {
   initForm(): void {
     this.todoForm = this.fb.group({
       taskName: ['', Validators.compose([Validators.required, Validators.maxLength(this.todoMaxLength)])],
-      link: ['', Validators.compose([Validators.pattern('^(http:\/\/|https:\/\/|www)(.*)')])],
+      link: ['', Validators.compose([Validators.pattern('^(http:\/\/|https:\/\/)(.*)')])],
       queueing: [0, Validators.compose([Validators.required, Validators.min(0)])],
       isComplete: [false]
     });
