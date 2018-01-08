@@ -9,4 +9,4 @@ export const dbconfig = {
 }
 // https://lexar.space // prod
 // http://localhost:3004 // json mock server
-export const API_END_POINT: string = 'http://localhost:3004';
+export const API_END_POINT: string = 'https://lexar.space';
