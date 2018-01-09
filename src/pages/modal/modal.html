@@ -23,9 +23,6 @@
       <span *ngIf="todoForm.get('taskName').hasError('required')">
         Task name is required.
       </span>
-      <span *ngIf="todoForm.get('taskName').hasError('maxlength')">
-        Task name max length is {{todoMaxLength}}.
-      </span>
     </p>
     <ion-item margin-bottom>
       <ion-label stacked>Link</ion-label>
@@ -33,7 +30,7 @@
     </ion-item>
     <p class="danger" *ngIf="(todoForm.get('link').touched || todoForm.get('link').dirty) && todoForm.get('link').errors">
       <span *ngIf="todoForm.get('link').hasError('pattern')">
-        link should start with http(s):// or www.
+        Link should start with http(s)://
       </span>
     </p>
     <ion-item margin-bottom>
@@ -45,7 +42,7 @@
         Cannot be negative.
       </span>
       <span *ngIf="todoForm.get('queueing').hasError('required')">
-        queueing is required.
+        Queueing is required.
       </span>
     </p>
     <ion-item margin-bottom>

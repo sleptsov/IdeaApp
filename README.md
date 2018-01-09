@@ -1,5 +1,5 @@
 ### Prerequisites
-Node.js 8.9.3 or later
+Node.js 8.9.4
 
 ### For development
 ```bash
@@ -7,9 +7,7 @@ npm install -g ionic cordova
 npm install
 ionic serve
 ```
-Browse the application at `http://localhost:8100/`       
-
-Run mock json-server - `npm run server`     
+Browse the application at `http://localhost:8100/`           
 
 ### For testing 
 

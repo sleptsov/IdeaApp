@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController, AlertController, MenuController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+// import { Storage } from '@ionic/storage'; // Temporary disabled.
 import { ToDoService, LoadingService, SettingsService, ToastService } from '../../providers';
 import { DATA, SORT_TYPES, TODOS_VIEW_STATUS } from '../../models/Common';
 import { Todo } from '../../models/Todo';
@@ -23,7 +23,7 @@ export class TodoListPage {
 
   constructor(
     private todoService: ToDoService,
-    private storage: Storage,
+    //private storage: Storage, // Temporary disabled.
     private loadingService: LoadingService,
     private modalCtrl: ModalController,
     private settingsSetvice: SettingsService,
@@ -85,7 +85,7 @@ export class TodoListPage {
       if (response) {
         this.todos = [...this.todos, response];
         this.sortBy(this.initialSortBy);
-        this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+        // this.storage.set(DATA.TODOS, JSON.stringify(this.todos)); // Temporary disabled.
         this.toastService.presentToast(`Todo added.`);
       } else {
         this.showAlert('Error', 'Some thing went wrong');
@@ -123,11 +123,11 @@ export class TodoListPage {
       if (true) { // Need to verify is it done on backend
         this.todos = this.updateTodos(todo);
         this.sortBy(this.initialSortBy);
-        this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+        // this.storage.set(DATA.TODOS, JSON.stringify(this.todos)); // Temporary disabled.
         this.toastService.presentToast(isComplete ? `Awesome! Keep doing!` : `Todo saved.`);
       } else {
-        this.showAlert('Error', 'Some thing went wrong');
-        console.log('Some thing went wrong');
+        // this.showAlert('Error', 'Some thing went wrong');
+        // console.log('Some thing went wrong');
       }
     }, (error) => {
       this.loadingService.dismiss();
@@ -171,10 +171,10 @@ export class TodoListPage {
           this.todos.splice(index, 1);
           if (this.todos.length > 0) {
             this.sortBy(this.initialSortBy);
-            this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
+            // this.storage.set(DATA.TODOS, JSON.stringify(this.todos)); // Temporary disabled.
             this.toastService.presentToast(`Todo deleted.`);
           } else {
-            this.storage.remove(DATA.TODOS);
+            // this.storage.remove(DATA.TODOS); // Temporary disabled.
           }
         }
       } else {
@@ -204,7 +204,10 @@ export class TodoListPage {
 
   loadTodos(): void {
     this.isLoading = true;
-    this.storage.get(DATA.TODOS).then((value) => {
+
+    // Temporary disabled saving to storage.
+
+    /* this.storage.get(DATA.TODOS).then((value) => {
       if (value) {
         this.todos = JSON.parse(value);
         this.sortBy(this.initialSortBy);
@@ -214,34 +217,34 @@ export class TodoListPage {
           let undone = this.todos.filter(t => !t.isComplete);
           this.toastService.presentToast(`You have ${undone.length} undone todos.`);
         }
+      } else { */
+    this.loadingService.presentLoading('Loading data...');
+    this.todoService.loadTodos().subscribe((response: Todo[]) => {
+      if (response) {
+        this.todos = response;
+        this.sortBy(this.initialSortBy);
+        // this.storage.set(DATA.TODOS, JSON.stringify(this.todos)); // Temporary disabled.
+        this.isLoading = false;
+        if (this.todos.length > 0) {
+          let undone = this.todos.filter(t => !t.isComplete);
+          this.toastService.presentToast(`You have ${undone.length} undone todos.`);
+        }
       } else {
-        this.loadingService.presentLoading('Loading data...');
-        this.todoService.loadTodos().subscribe((response: Todo[]) => {
-          if (response) {
-            this.todos = response;
-            this.sortBy(this.initialSortBy);
-            this.storage.set(DATA.TODOS, JSON.stringify(this.todos));
-            this.isLoading = false;
-            if (this.todos.length > 0) {
-              let undone = this.todos.filter(t => !t.isComplete);
-              this.toastService.presentToast(`You have ${undone.length} undone todos.`);
-            }
-          } else {
-            this.showAlert('Error', 'Some thing went wrong');
-            console.log('Some thing went wrong');
-          }
-        },
-          (error) => {
-            this.showAlert('Error', error);
-            this.loadingService.dismiss();
-            console.log(error);
-            this.isLoading = false;
-          },
-          () => {
-            this.loadingService.dismiss();
-          });
+        this.showAlert('Error', 'Some thing went wrong');
+        console.log('Some thing went wrong');
       }
-    });
+    },
+      (error) => {
+        this.showAlert('Error', error);
+        this.loadingService.dismiss();
+        console.log(error);
+        this.isLoading = false;
+      },
+      () => {
+        this.loadingService.dismiss();
+      });
+    // } // Temporary disabled saving to storage.
+    // }); // Temporary disabled saving to storage.
   }
 
   orderBy(order?: boolean): void {
