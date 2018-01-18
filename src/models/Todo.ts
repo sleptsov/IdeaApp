@@ -2,6 +2,7 @@ export class Todo {
     id?: number;
     taskName: string;
     isComplete: boolean;
+    priority: boolean;
     queueing: number;
     link: string;
     createdOn?: string;
@@ -18,6 +19,7 @@ export class Todo {
         createdBy: number = 1,
         modifiedOn: string = new Date().toISOString(),
         modifiedBy: number = 1,
+        priority: boolean = false
     ) {
         this.taskName = taskName;
         this.isComplete = isComplete;
@@ -27,5 +29,6 @@ export class Todo {
         this.createdBy = createdBy;
         this.modifiedOn = modifiedOn;
         this.modifiedBy = modifiedBy;
+        this.priority = priority;
     }
 }

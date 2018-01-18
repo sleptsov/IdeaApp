@@ -1,6 +1,7 @@
 export const config = {
     backButtonText: '',
-    tabsHideOnSubPages: true
+    tabsHideOnSubPages: true,
+    // locationStrategy: 'path' //use in prod to remove # in url
 }
 
 export const dbconfig = {

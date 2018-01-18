@@ -145,6 +145,7 @@ export class TodoListPage {
         id: item.id,
         taskName: item.id === todo.id ? todo.taskName : item.taskName,
         isComplete: item.id === todo.id ? todo.isComplete : item.isComplete,
+        priority: item.id === todo.id ? todo.priority : item.priority,
         queueing: item.id === todo.id ? Number.parseInt(<any>todo.queueing) : Number.parseInt(<any>item.queueing),
         link: item.id === todo.id ? todo.link : item.link,
         createdOn: item.createdOn,
